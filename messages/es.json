@@ -1,0 +1,17 @@
+{
+  "title": "CadaHogar Cuba",
+  "tagline": "Ayuda comunitaria para hogares cubanos",
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca",
+    "contact": "Contacto",
+    "mission": "Misi\u00f3n",
+    "resources": "Recursos",
+    "getInvolved": "Invol\u00facrate",
+    "give": "Donar"
+  },
+  "hero": {
+    "headline": "Bienvenido a CadaHogar Cuba",
+    "sub": "Un starter m\u00ednimo de Next.js + next-intl listo para Netlify."
+  }
+}
