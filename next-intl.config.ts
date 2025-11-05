@@ -1,6 +1,6 @@
 import {defineRouting} from 'next-intl/routing';
 
-export const routing = defineRouting({
+export default defineRouting({
   locales: ['en', 'es'],
   defaultLocale: 'en',
   pathnames: {
@@ -15,5 +15,3 @@ export const routing = defineRouting({
     '/give': {en: '/give', es: '/give'}
   }
 });
-
-export default routing;
