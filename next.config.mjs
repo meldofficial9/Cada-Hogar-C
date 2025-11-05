@@ -1,9 +1,12 @@
-import createNextIntlPlugin from 'next-intl/plugin';
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  // Good for Netlify’s Next.js runtime
+  output: 'standalone',
+  experimental: {
+    // If you’re not using server actions, you can omit this
+    // serverActions: { allowedOrigins: ['*'] }
+  }
+};
 
-// This wires next-intl to the App Router build
-const withNextIntl = createNextIntlPlugin();
-
-export default withNextIntl({
-  // Your Next.js config
-  reactStrictMode: true
-});
+export default nextConfig;
