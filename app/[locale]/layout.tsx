@@ -1,28 +1,23 @@
 import '../globals.css';
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Cada Hogar Cuba',
-  description: 'GoCuba'
+  description: 'GoCuba • CHC'
 };
-
-export function generateStaticParams() {
-  return [{locale: 'en'}, {locale: 'es'}];
-}
 
 export default async function RootLayout({
   children,
-  params: {locale}
+  params
 }: {
   children: React.ReactNode;
-  params: {locale: string};
+  params: { locale: string };
 }) {
   const messages = await getMessages();
-
   return (
-    <html lang={locale}>
+    <html lang={params.locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
           {children}
