@@ -1,10 +1,9 @@
 import createMiddleware from 'next-intl/middleware';
-import routing from './next-intl.config';
+import {routing} from './next-intl.config';
 
 export default createMiddleware(routing);
 
+// Match the root and any localized path
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\.(?:png|jpg|jpeg|gif|webp|svg)).*)'
-  ]
+  matcher: ['/', '/(en|es)/:path*']
 };
