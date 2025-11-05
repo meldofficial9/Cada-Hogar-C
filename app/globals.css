@@ -2,5 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Your site-wide custom styles */
-html, body { height: 100%; }
+/* Optional base styles */
+html, body { min-height: 100%; }
