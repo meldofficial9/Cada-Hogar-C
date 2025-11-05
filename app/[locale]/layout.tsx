@@ -1,25 +1,32 @@
-import '../globals.css';
-import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+// app/[locale]/layout.tsx
+import {ReactNode} from 'react';
+import {NextIntlClientProvider} from 'next-intl';
+import {getMessages, unstable_setRequestLocale as setRequestLocale} from 'next-intl/server';
+import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
   title: 'Cada Hogar Cuba',
-  description: 'GoCuba • CHC'
+  description: 'Building a community with purpose'
 };
 
-export default async function RootLayout({
+export function generateStaticParams() {
+  return [{locale: 'en'}, {locale: 'es'}];
+}
+
+export default async function LocaleLayout({
   children,
-  params
+  params: {locale}
 }: {
-  children: React.ReactNode;
-  params: { locale: string };
+  children: ReactNode;
+  params: {locale: 'en' | 'es'};
 }) {
+  setRequestLocale(locale);
   const messages = await getMessages();
+
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
         </NextIntlClientProvider>
       </body>
