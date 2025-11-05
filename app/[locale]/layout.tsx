@@ -1,8 +1,9 @@
 import '../globals.css';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
+import type {Metadata} from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Cada Hogar Cuba',
   description: 'GoCuba'
 };
