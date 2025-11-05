@@ -1,8 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    typedRoutes: true
-  }
-};
-export default nextConfig;
+import createNextIntlPlugin from 'next-intl/plugin';
+
+// This wires next-intl to the App Router build
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl({
+  // Your Next.js config
+  reactStrictMode: true
+});
