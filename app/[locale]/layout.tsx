@@ -1,7 +1,6 @@
-// app/[locale]/layout.tsx
 import {ReactNode} from 'react';
 import {NextIntlClientProvider} from 'next-intl';
-import {getMessages, unstable_setRequestLocale as setRequestLocale} from 'next-intl/server';
+import {getMessages, setRequestLocale} from 'next-intl/server';
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
@@ -26,7 +25,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages} locale={locale}>
+        <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
       </body>
