@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {supabaseAdmin} from '@/lib/supabaseAdmin';
+import {createClient} from '@supabase/supabase-js';
 
 export async function POST(req: Request) {
   try {
@@ -11,12 +11,24 @@ export async function POST(req: Request) {
     const locale = formData.get('locale')?.toString() || 'en';
     const file = formData.get('file') as File | null;
 
-    if (!supabaseAdmin) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !/^https?:\/\//.test(supabaseUrl)) {
       return NextResponse.json(
-        {error: 'Supabase admin client is not configured'},
+        {error: 'NEXT_PUBLIC_SUPABASE_URL is missing or invalid'},
         {status: 500}
       );
     }
+
+    if (!serviceRoleKey) {
+      return NextResponse.json(
+        {error: 'SUPABASE_SERVICE_ROLE_KEY is missing'},
+        {status: 500}
+      );
+    }
+
+    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
     if (password !== process.env.ADMIN_UPLOAD_PASSWORD) {
       return NextResponse.json({error: 'Unauthorized'}, {status: 401});
@@ -73,16 +85,10 @@ export async function POST(req: Request) {
       return NextResponse.json({error: insertError.message}, {status: 500});
     }
 
-    return NextResponse.json({
-      success: true,
-      publicUrl
-    });
+    return NextResponse.json({success: true, publicUrl});
   } catch (error) {
     console.error('Upload route error:', error);
 
-    return NextResponse.json(
-      {error: 'Upload failed'},
-      {status: 500}
-    );
+    return NextResponse.json({error: 'Upload failed'}, {status: 500});
   }
 }
