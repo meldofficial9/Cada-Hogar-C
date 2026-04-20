@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '-').toLowerCase();
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
     const filePath = `${locale}/${Date.now()}-${safeName}`;
 
     const {error: uploadError} = await supabaseAdmin.storage
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
       });
 
     if (uploadError) {
-      console.error('Supabase storage upload error:', uploadError);
+      console.error('Storage upload error:', uploadError);
       return NextResponse.json({error: uploadError.message}, {status: 500});
     }
 
@@ -91,16 +91,18 @@ export async function POST(req: Request) {
     });
 
     if (insertError) {
-      console.error('Supabase insert error:', insertError);
+      console.error('DB insert error:', insertError);
       return NextResponse.json({error: insertError.message}, {status: 500});
     }
 
     return NextResponse.json({success: true, publicUrl}, {status: 200});
   } catch (error) {
     console.error('Upload route fatal error:', error);
+
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : 'Upload failed'
+        error:
+          error instanceof Error ? error.message : 'Unexpected upload failure'
       },
       {status: 500}
     );
