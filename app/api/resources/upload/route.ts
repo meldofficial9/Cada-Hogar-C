@@ -1,18 +1,22 @@
 import {NextResponse} from 'next/server';
 import {createClient} from '@supabase/supabase-js';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
 
-    const password = formData.get('password')?.toString() || '';
-    const title = formData.get('title')?.toString() || '';
-    const description = formData.get('description')?.toString() || '';
-    const locale = formData.get('locale')?.toString() || 'en';
-    const file = formData.get('file') as File | null;
+    const password = String(formData.get('password') || '');
+    const title = String(formData.get('title') || '');
+    const description = String(formData.get('description') || '');
+    const locale = String(formData.get('locale') || 'en');
+    const file = formData.get('file');
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const adminPassword = process.env.ADMIN_UPLOAD_PASSWORD;
 
     if (!supabaseUrl || !/^https?:\/\//.test(supabaseUrl)) {
       return NextResponse.json(
@@ -28,17 +32,23 @@ export async function POST(req: Request) {
       );
     }
 
-    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
+    if (!adminPassword) {
+      return NextResponse.json(
+        {error: 'ADMIN_UPLOAD_PASSWORD is missing'},
+        {status: 500}
+      );
+    }
 
-    if (password !== process.env.ADMIN_UPLOAD_PASSWORD) {
+    if (password !== adminPassword) {
       return NextResponse.json({error: 'Unauthorized'}, {status: 401});
     }
 
-    if (!title || !file) {
-      return NextResponse.json(
-        {error: 'Title and file are required'},
-        {status: 400}
-      );
+    if (!title) {
+      return NextResponse.json({error: 'Title is required'}, {status: 400});
+    }
+
+    if (!(file instanceof File)) {
+      return NextResponse.json({error: 'File is required'}, {status: 400});
     }
 
     if (file.type !== 'application/pdf') {
@@ -48,11 +58,13 @@ export async function POST(req: Request) {
       );
     }
 
+    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const safeName = file.name.replace(/\s+/g, '-').toLowerCase();
-    const filePath = `${Date.now()}-${safeName}`;
+    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '-').toLowerCase();
+    const filePath = `${locale}/${Date.now()}-${safeName}`;
 
     const {error: uploadError} = await supabaseAdmin.storage
       .from('resources')
@@ -62,33 +74,35 @@ export async function POST(req: Request) {
       });
 
     if (uploadError) {
+      console.error('Supabase storage upload error:', uploadError);
       return NextResponse.json({error: uploadError.message}, {status: 500});
     }
 
-    const {data: publicUrlData} = supabaseAdmin.storage
-      .from('resources')
-      .getPublicUrl(filePath);
+    const {
+      data: {publicUrl}
+    } = supabaseAdmin.storage.from('resources').getPublicUrl(filePath);
 
-    const publicUrl = publicUrlData.publicUrl;
-
-    const {error: insertError} = await supabaseAdmin
-      .from('resources')
-      .insert({
-        title,
-        description,
-        file_path: filePath,
-        public_url: publicUrl,
-        locale
-      });
+    const {error: insertError} = await supabaseAdmin.from('resources').insert({
+      title,
+      description,
+      file_path: filePath,
+      public_url: publicUrl,
+      locale
+    });
 
     if (insertError) {
+      console.error('Supabase insert error:', insertError);
       return NextResponse.json({error: insertError.message}, {status: 500});
     }
 
-    return NextResponse.json({success: true, publicUrl});
+    return NextResponse.json({success: true, publicUrl}, {status: 200});
   } catch (error) {
-    console.error('Upload route error:', error);
-
-    return NextResponse.json({error: 'Upload failed'}, {status: 500});
+    console.error('Upload route fatal error:', error);
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : 'Upload failed'
+      },
+      {status: 500}
+    );
   }
 }
