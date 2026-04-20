@@ -43,20 +43,12 @@ export default function AdminPage() {
         if (!res.ok) {
           setMessage(data.error || 'Upload failed');
         } else {
-          setMessage('PDF uploaded successfully');
-          setTitle('');
-          setDescription('');
-          setLocale('en');
-          setPassword('');
-          setFile(null);
-
-          const fileInput = document.getElementById('pdfFile') as HTMLInputElement | null;
-          if (fileInput) fileInput.value = '';
+          setMessage(JSON.stringify(data));
         }
       } catch {
         setMessage(`Server returned non-JSON response: ${text.slice(0, 200)}`);
       }
-    } catch (error) {
+    } catch {
       setMessage('Network error while uploading.');
     } finally {
       setLoading(false);
@@ -66,7 +58,7 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-white px-6 py-16">
       <div className="mx-auto max-w-2xl">
-        <h1 className="text-4xl font-bold mb-8">Upload Free PDF Resources</h1>
+        <h1 className="text-4xl font-bold mb-8">Upload Test</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-gray-200 p-8 shadow-sm">
           <div>
