@@ -35,23 +35,29 @@ export default function AdminPage() {
         body: formData
       });
 
-      const data = await res.json();
+      const text = await res.text();
 
-      if (!res.ok) {
-        setMessage(data.error || 'Upload failed');
-      } else {
-        setMessage('PDF uploaded successfully');
-        setTitle('');
-        setDescription('');
-        setLocale('en');
-        setPassword('');
-        setFile(null);
+      try {
+        const data = JSON.parse(text);
 
-        const fileInput = document.getElementById('pdfFile') as HTMLInputElement | null;
-        if (fileInput) fileInput.value = '';
+        if (!res.ok) {
+          setMessage(data.error || 'Upload failed');
+        } else {
+          setMessage('PDF uploaded successfully');
+          setTitle('');
+          setDescription('');
+          setLocale('en');
+          setPassword('');
+          setFile(null);
+
+          const fileInput = document.getElementById('pdfFile') as HTMLInputElement | null;
+          if (fileInput) fileInput.value = '';
+        }
+      } catch {
+        setMessage(`Server returned non-JSON response: ${text.slice(0, 200)}`);
       }
-    } catch {
-      setMessage('Something went wrong while uploading.');
+    } catch (error) {
+      setMessage('Network error while uploading.');
     } finally {
       setLoading(false);
     }
@@ -60,55 +66,35 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-white px-6 py-16">
       <div className="mx-auto max-w-2xl">
-        <div className="mb-10">
-          <p className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-3">
-            Admin Panel
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Upload Free PDF Resources
-          </h1>
-          <p className="text-lg text-gray-600">
-            Add downloadable PDF materials for visitors to access from the resources page.
-          </p>
-        </div>
+        <h1 className="text-4xl font-bold mb-8">Upload Free PDF Resources</h1>
 
-        <form
-          onSubmit={handleSubmit}
-          className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm space-y-6"
-        >
+        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-gray-200 p-8 shadow-sm">
           <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-800">
-              Resource Title
-            </label>
+            <label className="block mb-2 font-medium">Title</label>
             <input
-              type="text"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-800">
-              Description
-            </label>
+            <label className="block mb-2 font-medium">Description</label>
             <textarea
+              className="w-full rounded-xl border border-gray-300 px-4 py-3"
+              rows={4}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
           <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-800">
-              Language
-            </label>
+            <label className="block mb-2 font-medium">Language</label>
             <select
+              className="w-full rounded-xl border border-gray-300 px-4 py-3"
               value={locale}
               onChange={(e) => setLocale(e.target.value)}
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             >
               <option value="en">English</option>
               <option value="es">Español</option>
@@ -116,28 +102,23 @@ export default function AdminPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-800">
-              PDF File
-            </label>
+            <label className="block mb-2 font-medium">PDF File</label>
             <input
               id="pdfFile"
               type="file"
               accept="application/pdf"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
-              className="block w-full rounded-2xl border border-gray-300 px-4 py-3"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-800">
-              Admin Password
-            </label>
+            <label className="block mb-2 font-medium">Admin Password</label>
             <input
               type="password"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
               required
             />
           </div>
@@ -145,16 +126,12 @@ export default function AdminPage() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-white font-semibold disabled:opacity-60"
+            className="rounded-full bg-black px-6 py-3 text-white font-semibold"
           >
             {loading ? 'Uploading...' : 'Upload PDF'}
           </button>
 
-          {message && (
-            <div className="rounded-2xl bg-gray-100 px-4 py-3 text-sm text-gray-800">
-              {message}
-            </div>
-          )}
+          {message && <p className="text-sm text-gray-700 break-words">{message}</p>}
         </form>
       </div>
     </main>
