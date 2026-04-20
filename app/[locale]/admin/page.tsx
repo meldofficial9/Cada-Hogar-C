@@ -50,7 +50,7 @@ export default function AdminPage() {
         const fileInput = document.getElementById('pdfFile') as HTMLInputElement | null;
         if (fileInput) fileInput.value = '';
       }
-    } catch (error) {
+    } catch {
       setMessage('Something went wrong while uploading.');
     } finally {
       setLoading(false);
@@ -84,7 +84,6 @@ export default function AdminPage() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Example: Prayer Guide for Families"
               className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
               required
             />
@@ -97,7 +96,6 @@ export default function AdminPage() {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Write a short description for this PDF..."
               rows={4}
               className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
@@ -139,7 +137,6 @@ export default function AdminPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter admin password"
               className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
               required
             />
@@ -148,7 +145,7 @@ export default function AdminPage() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-white font-semibold transition hover:opacity-90 disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-white font-semibold disabled:opacity-60"
           >
             {loading ? 'Uploading...' : 'Upload PDF'}
           </button>
