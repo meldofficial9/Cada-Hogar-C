@@ -104,6 +104,44 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+     {/* Monthly Featured Article */}
+<section className="bg-white py-20">
+  <div className="mx-auto max-w-7xl px-6">
+    <div className="mb-10 max-w-2xl">
+      <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+        Featured Monthly Article
+      </p>
+      <h2 className="text-3xl font-bold md:text-4xl">
+        Stories, vision, and updates from the mission
+      </h2>
+    </div>
+
+    <div className="grid items-center gap-10 overflow-hidden rounded-3xl bg-gray-50 shadow-sm md:grid-cols-2">
+      <div className="h-80 bg-[url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
+
+      <div className="p-8 md:p-10">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+          April 2026
+        </p>
+
+        <h3 className="mb-4 text-3xl font-bold leading-tight">
+          Prayer that transforms homes
+        </h3>
+
+        <p className="mb-6 text-lg text-gray-600">
+          Discover how consistent prayer, community outreach, and faith-filled action are bringing hope into homes across Cuba.
+        </p>
+
+        <Link
+          href={`/${locale}/about`}
+          className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
+        >
+          Read Article
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Mission cards */}
       <section className="bg-white py-20">
