@@ -1,6 +1,7 @@
  import Image from 'next/image';
 import Link from 'next/link';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
+import SubscriptionForm from '@/components/SubscriptionForm';
 
 export default async function HomePage({
   params: {locale}
@@ -286,19 +287,7 @@ export default async function HomePage({
           Receive ministry updates, prayer needs, new resources, and stories of what God is doing through Cada Hogar Cuba.
         </p>
 
-        <form className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="w-full rounded-full border border-white/20 bg-white px-5 py-3 text-black outline-none sm:max-w-md"
-          />
-          <button
-            type="submit"
-            className="rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-gray-200"
-          >
-            Subscribe
-          </button>
-        </form>
+        <SubscriptionForm locale={locale} />
       </div>
     </div>
   </div>
