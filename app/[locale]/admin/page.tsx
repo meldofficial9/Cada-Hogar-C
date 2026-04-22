@@ -96,45 +96,47 @@ export default function AdminPage() {
   }
 
   async function handleDelete(id: string, filePath: string) {
-    if (!password) {
-      setMessage('Enter the admin password first.');
-      return;
-    }
-
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this resource?'
-    );
-
-    if (!confirmed) return;
-
-    setDeletingId(id);
-    setMessage('');
-
-    try {
-      const res = await fetch('/api/resources/delete', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          id,
-          filePath,
-          password
-        })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setMessage(data.error || 'Delete failed.');
-      } else {
-        setMessage('Resource deleted successfully.');
-        await loadResources();
-      }
-    } catch {
-      setMessage('Something went wrong while deleting.');
-    } finally {
-      setDeletingId('');
-    }
+  if (!password) {
+    setMessage('Enter the admin password first.');
+    return;
   }
+
+  const confirmed = window.confirm(
+    'Are you sure you want to delete this resource?'
+  );
+
+  if (!confirmed) return;
+
+  setDeletingId(id);
+  setMessage('');
+
+  try {
+    const res = await fetch('/api/resources/delete', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id,
+        filePath,
+        password
+      })
+    });
+
+    const data = await res.json();
+    console.log('DELETE RESPONSE:', data);
+
+    if (!res.ok) {
+      setMessage(data.error || 'Delete failed.');
+    } else {
+      setMessage('Resource deleted successfully.');
+      await loadResources();
+    }
+  } catch (error) {
+    console.error('DELETE ERROR:', error);
+    setMessage('Something went wrong while deleting.');
+  } finally {
+    setDeletingId('');
+  }
+}
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
