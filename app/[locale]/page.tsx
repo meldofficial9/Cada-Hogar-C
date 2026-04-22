@@ -271,6 +271,38 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+     {/* Subscription */}
+<section className="bg-gray-50 py-20">
+  <div className="mx-auto max-w-4xl px-6">
+    <div className="rounded-3xl bg-black px-8 py-12 text-white shadow-sm md:px-12 md:py-16">
+      <div className="mx-auto max-w-2xl text-center">
+        <p className="mb-3 text-sm uppercase tracking-[0.25em] text-white/70">
+          Stay Connected
+        </p>
+        <h2 className="mb-4 text-3xl font-bold md:text-5xl">
+          Subscribe for updates and encouragement
+        </h2>
+        <p className="mb-8 text-lg text-white/80">
+          Receive ministry updates, prayer needs, new resources, and stories of what God is doing through Cada Hogar Cuba.
+        </p>
+
+        <form className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="w-full rounded-full border border-white/20 bg-white px-5 py-3 text-black outline-none sm:max-w-md"
+          />
+          <button
+            type="submit"
+            className="rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* CTA */}
       <section className="bg-white py-20">
