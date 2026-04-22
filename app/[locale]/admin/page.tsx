@@ -11,7 +11,7 @@ export default function AdminPage() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setMessage('');
@@ -35,97 +35,128 @@ export default function AdminPage() {
         body: formData
       });
 
-      const text = await res.text();
+      const data = await res.json();
 
-      try {
-        const data = JSON.parse(text);
-
-        if (!res.ok) {
-          setMessage(data.error || 'Upload failed');
-        } else {
-          setMessage(JSON.stringify(data));
-        }
-      } catch {
-        setMessage(`Server returned non-JSON response: ${text.slice(0, 200)}`);
+      if (!res.ok) {
+        setMessage(data.error || 'Upload failed.');
+      } else {
+        setMessage('PDF uploaded successfully.');
+        setTitle('');
+        setDescription('');
+        setPassword('');
+        setFile(null);
       }
-    } catch {
-      setMessage('Network error while uploading.');
+    } catch (error) {
+      setMessage('Something went wrong while uploading.');
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <main className="min-h-screen bg-white px-6 py-16">
-      <div className="mx-auto max-w-2xl">
-        <h1 className="text-4xl font-bold mb-8">Upload Test</h1>
+    <main className="min-h-screen bg-white text-gray-900">
+      <section className="bg-black text-white">
+        <div className="mx-auto max-w-5xl px-6 py-20">
+          <p className="mb-3 text-sm uppercase tracking-[0.25em] text-white/70">
+            Admin Panel
+          </p>
+          <h1 className="text-4xl font-bold md:text-5xl">
+            Upload a new resource
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg text-white/80">
+            Add downloadable PDFs for your community in English or Spanish.
+          </p>
+        </div>
+      </section>
 
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-gray-200 p-8 shadow-sm">
-          <div>
-            <label className="block mb-2 font-medium">Title</label>
-            <input
-              className="w-full rounded-xl border border-gray-300 px-4 py-3"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">Description</label>
-            <textarea
-              className="w-full rounded-xl border border-gray-300 px-4 py-3"
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">Language</label>
-            <select
-              className="w-full rounded-xl border border-gray-300 px-4 py-3"
-              value={locale}
-              onChange={(e) => setLocale(e.target.value)}
-            >
-              <option value="en">English</option>
-              <option value="es">Español</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">PDF File</label>
-            <input
-              id="pdfFile"
-              type="file"
-              accept="application/pdf"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">Admin Password</label>
-            <input
-              type="password"
-              className="w-full rounded-xl border border-gray-300 px-4 py-3"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-full bg-black px-6 py-3 text-white font-semibold"
+      <section className="bg-gray-50 py-16">
+        <div className="mx-auto max-w-3xl px-6">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm md:p-10"
           >
-            {loading ? 'Uploading...' : 'Upload PDF'}
-          </button>
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold">Resource Details</h2>
+              <p className="mt-2 text-gray-600">
+                Fill in the information below and upload a PDF file.
+              </p>
+            </div>
 
-          {message && <p className="text-sm text-gray-700 break-words">{message}</p>}
-        </form>
-      </div>
+            <div className="grid gap-6">
+              <div>
+                <label className="mb-2 block font-medium">Title</label>
+                <input
+                  className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition focus:border-black"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Enter resource title"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block font-medium">Description</label>
+                <textarea
+                  className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition focus:border-black"
+                  rows={5}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Enter a short description"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block font-medium">Language</label>
+                <select
+                  className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition focus:border-black"
+                  value={locale}
+                  onChange={(e) => setLocale(e.target.value)}
+                >
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-2 block font-medium">PDF File</label>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  className="block w-full rounded-2xl border border-gray-300 px-4 py-3"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block font-medium">Admin Password</label>
+                <input
+                  type="password"
+                  className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none transition focus:border-black"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter admin password"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className="inline-flex rounded-full bg-black px-6 py-3 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? 'Uploading...' : 'Upload PDF'}
+              </button>
+
+              {message && (
+                <p className="text-sm text-gray-700">{message}</p>
+              )}
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
   );
 }
