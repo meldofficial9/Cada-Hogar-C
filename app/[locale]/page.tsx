@@ -292,6 +292,95 @@ export default async function HomePage({
     </div>
   </div>
 </section>
+     {/* Quick Contact */}
+<section className="bg-white py-20">
+  <div className="mx-auto max-w-7xl px-6">
+    <div className="mb-12 max-w-2xl">
+      <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+        Contact Us
+      </p>
+      <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+        Stay connected with the ministry
+      </h2>
+      <p className="text-lg text-gray-600">
+        Reach out for questions, partnership opportunities, prayer, or ministry updates.
+      </p>
+    </div>
+
+    <div className="grid gap-6 md:grid-cols-3">
+      {/* Email */}
+      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
+          ✉️
+        </div>
+
+        <h3 className="mb-3 text-2xl font-semibold">Email</h3>
+
+        <p className="mb-4 text-gray-600">
+          Contact us directly for ministry questions and updates.
+        </p>
+
+        <a
+          href="mailto:gocuba@horadelaluz.org"
+          className="font-semibold text-black underline"
+        >
+          gocuba@horadelaluz.org
+        </a>
+      </div>
+
+      {/* Phone */}
+      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
+          📞
+        </div>
+
+        <h3 className="mb-3 text-2xl font-semibold">Phone</h3>
+
+        <p className="mb-4 text-gray-600">
+          Call us for direct communication and support.
+        </p>
+
+        <a
+          href="tel:+5351102875"
+          className="font-semibold text-black underline"
+        >
+          +5351102875
+        </a>
+      </div>
+
+      {/* Instagram */}
+      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
+          📷
+        </div>
+
+        <h3 className="mb-3 text-2xl font-semibold">Instagram</h3>
+
+        <p className="mb-4 text-gray-600">
+          Follow us for stories, updates, prayer, and ministry content.
+        </p>
+
+        <a
+          href="https://instagram.com/lahoradelaluz.cuba"
+          target="_blank"
+          rel="noreferrer"
+          className="font-semibold text-black underline"
+        >
+          @cadahogarcuba
+        </a>
+      </div>
+    </div>
+
+    <div className="mt-10">
+      <Link
+        href={`/${locale}/contact`}
+        className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
+      >
+        Go to Contact Page
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* CTA */}
       <section className="bg-white py-20">
