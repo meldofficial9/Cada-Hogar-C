@@ -33,7 +33,7 @@ export default async function HomePage({
                 alt="La Hora de la Luz logo"
                 width={135}
                 height={58}
-                className="h-10 w-auto object-contain md:h-12"
+                className="h-12 w-auto object-contain md:h-14"
                 priority
               />
             </div>
