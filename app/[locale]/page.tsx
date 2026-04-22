@@ -1,3 +1,4 @@
+ import Image from 'next/image';
 import Link from 'next/link';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 
@@ -12,13 +13,33 @@ export default async function HomePage({
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* Navbar */}
-      <header className="w-full border-b border-gray-200 bg-white/95 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold tracking-tight">
-            Cada Hogar Cuba
-          </div>
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <Link href={`/${locale}`} className="flex items-center gap-3">
+            <div className="rounded-2xl bg-white p-2">
+              <Image
+                src="/logos/everyhome.png"
+                alt="Every Home logo"
+                width={150}
+                height={42}
+                className="h-8 w-auto object-contain md:h-10"
+                priority
+              />
+            </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            <div className="rounded-2xl bg-white p-2">
+              <Image
+                src="/logos/lahoradelaluz.jpg"
+                alt="La Hora de la Luz logo"
+                width={135}
+                height={58}
+                className="h-10 w-auto object-contain md:h-12"
+                priority
+              />
+            </div>
+          </Link>
+
+          <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
             <Link href={`/${locale}/about`}>About</Link>
             <Link href={`/${locale}/mission`}>Mission</Link>
             <Link href={`/${locale}/resources`}>Resources</Link>
@@ -29,19 +50,19 @@ export default async function HomePage({
           <div className="flex items-center gap-3">
             <Link
               href="/en"
-              className="text-sm px-3 py-1 rounded-full border border-gray-300"
+              className="rounded-full border border-gray-300 px-3 py-1 text-sm"
             >
               EN
             </Link>
             <Link
               href="/es"
-              className="text-sm px-3 py-1 rounded-full border border-gray-300"
+              className="rounded-full border border-gray-300 px-3 py-1 text-sm"
             >
               ES
             </Link>
             <Link
               href={`/${locale}/give`}
-              className="hidden md:inline-block px-5 py-2 rounded-full bg-black text-white text-sm font-semibold"
+              className="hidden rounded-full bg-black px-5 py-2 text-sm font-semibold text-white md:inline-block"
             >
               Give
             </Link>
@@ -54,28 +75,28 @@ export default async function HomePage({
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524412529635-a258ed66c010?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-28 md:py-36 text-white">
+        <div className="relative mx-auto max-w-7xl px-6 py-28 text-white md:py-36">
           <div className="max-w-3xl">
-            <p className="uppercase tracking-[0.25em] text-sm mb-5 text-white/80">
+            <p className="mb-5 text-sm uppercase tracking-[0.25em] text-white/80">
               Cada Hogar Cuba
             </p>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+            <h1 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">
               {t('hero.headline')}
             </h1>
-            <p className="text-lg md:text-xl text-white/85 max-w-2xl mb-8">
+            <p className="mb-8 max-w-2xl text-lg text-white/85 md:text-xl">
               {t('hero.sub')}
             </p>
 
             <div className="flex flex-wrap gap-4">
               <Link
                 href={`/${locale}/about`}
-                className="px-6 py-3 rounded-full bg-white text-black font-semibold"
+                className="rounded-full bg-white px-6 py-3 font-semibold text-black"
               >
                 Learn More
               </Link>
               <Link
                 href={`/${locale}/give`}
-                className="px-6 py-3 rounded-full border border-white text-white font-semibold"
+                className="rounded-full border border-white px-6 py-3 font-semibold text-white"
               >
                 Support the Mission
               </Link>
@@ -85,40 +106,43 @@ export default async function HomePage({
       </section>
 
       {/* Mission cards */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-2xl mb-12">
-            <p className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-3">
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
               Our Focus
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
               How we serve families and communities
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-lg text-gray-600">
               We want every home to encounter hope, faith, and practical support
               through Christ-centered outreach.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-3">
             <div className="rounded-3xl border border-gray-200 p-8 shadow-sm">
-              <h3 className="text-xl font-semibold mb-3">Faith</h3>
+              <h3 className="mb-3 text-xl font-semibold">Faith</h3>
               <p className="text-gray-600">
-                Sharing the message of Jesus with families, children, and communities.
+                Sharing the message of Jesus with families, children, and
+                communities.
               </p>
             </div>
 
             <div className="rounded-3xl border border-gray-200 p-8 shadow-sm">
-              <h3 className="text-xl font-semibold mb-3">Support</h3>
+              <h3 className="mb-3 text-xl font-semibold">Support</h3>
               <p className="text-gray-600">
-                Providing encouragement, resources, and practical care where it is needed most.
+                Providing encouragement, resources, and practical care where it
+                is needed most.
               </p>
             </div>
 
             <div className="rounded-3xl border border-gray-200 p-8 shadow-sm">
-              <h3 className="text-xl font-semibold mb-3">Community</h3>
+              <h3 className="mb-3 text-xl font-semibold">Community</h3>
               <p className="text-gray-600">
-                Building lasting relationships that strengthen homes and reflect God’s love.
+                Building lasting relationships that strengthen homes and reflect
+                God’s love.
               </p>
             </div>
           </div>
@@ -126,15 +150,16 @@ export default async function HomePage({
       </section>
 
       {/* Featured sections */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="rounded-3xl overflow-hidden bg-white shadow-sm">
+      <section className="bg-gray-50 py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
               <div className="h-56 bg-[url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
               <div className="p-7">
-                <h3 className="text-2xl font-semibold mb-3">Our Mission</h3>
-                <p className="text-gray-600 mb-5">
-                  Learn how Cada Hogar Cuba is bringing hope to families through faith and action.
+                <h3 className="mb-3 text-2xl font-semibold">Our Mission</h3>
+                <p className="mb-5 text-gray-600">
+                  Learn how Cada Hogar Cuba is bringing hope to families through
+                  faith and action.
                 </p>
                 <Link href={`/${locale}/mission`} className="font-semibold">
                   Learn More →
@@ -142,12 +167,13 @@ export default async function HomePage({
               </div>
             </div>
 
-            <div className="rounded-3xl overflow-hidden bg-white shadow-sm">
+            <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
               <div className="h-56 bg-[url('https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
               <div className="p-7">
-                <h3 className="text-2xl font-semibold mb-3">Resources</h3>
-                <p className="text-gray-600 mb-5">
-                  Explore tools, updates, and content that help people connect and serve.
+                <h3 className="mb-3 text-2xl font-semibold">Resources</h3>
+                <p className="mb-5 text-gray-600">
+                  Explore tools, updates, and content that help people connect
+                  and serve.
                 </p>
                 <Link href={`/${locale}/resources`} className="font-semibold">
                   Explore Resources →
@@ -155,14 +181,18 @@ export default async function HomePage({
               </div>
             </div>
 
-            <div className="rounded-3xl overflow-hidden bg-white shadow-sm">
+            <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
               <div className="h-56 bg-[url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
               <div className="p-7">
-                <h3 className="text-2xl font-semibold mb-3">Get Involved</h3>
-                <p className="text-gray-600 mb-5">
-                  Join the work through prayer, partnership, giving, and community support.
+                <h3 className="mb-3 text-2xl font-semibold">Get Involved</h3>
+                <p className="mb-5 text-gray-600">
+                  Join the work through prayer, partnership, giving, and
+                  community support.
                 </p>
-                <Link href={`/${locale}/get-involved`} className="font-semibold">
+                <Link
+                  href={`/${locale}/get-involved`}
+                  className="font-semibold"
+                >
                   Join Us →
                 </Link>
               </div>
@@ -172,31 +202,32 @@ export default async function HomePage({
       </section>
 
       {/* Impact */}
-      <section className="py-20 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-2xl mb-12">
-            <p className="text-sm uppercase tracking-[0.2em] text-white/60 mb-3">
+      <section className="bg-black py-20 text-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/60">
               Impact
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
               Building a community with purpose
             </h2>
-            <p className="text-white/75 text-lg">
-              Every prayer, every partnership, and every act of generosity helps reach more homes.
+            <p className="text-lg text-white/75">
+              Every prayer, every partnership, and every act of generosity helps
+              reach more homes.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-3">
             <div>
-              <p className="text-5xl font-bold mb-2">100+</p>
+              <p className="mb-2 text-5xl font-bold">100+</p>
               <p className="text-white/70">Families reached</p>
             </div>
             <div>
-              <p className="text-5xl font-bold mb-2">25+</p>
+              <p className="mb-2 text-5xl font-bold">25+</p>
               <p className="text-white/70">Community efforts</p>
             </div>
             <div>
-              <p className="text-5xl font-bold mb-2">2</p>
+              <p className="mb-2 text-5xl font-bold">2</p>
               <p className="text-white/70">Languages supported</p>
             </div>
           </div>
@@ -204,24 +235,25 @@ export default async function HomePage({
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <h2 className="mb-6 text-3xl font-bold md:text-5xl">
             Be part of what God is doing through Cada Hogar Cuba
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Partner with us in prayer, generosity, and action to bring hope to more homes.
+          <p className="mb-8 text-lg text-gray-600">
+            Partner with us in prayer, generosity, and action to bring hope to
+            more homes.
           </p>
-          <div className="flex justify-center gap-4 flex-wrap">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
               href={`/${locale}/give`}
-              className="px-6 py-3 rounded-full bg-black text-white font-semibold"
+              className="rounded-full bg-black px-6 py-3 font-semibold text-white"
             >
               Give Now
             </Link>
             <Link
               href={`/${locale}/contact`}
-              className="px-6 py-3 rounded-full border border-gray-300 font-semibold"
+              className="rounded-full border border-gray-300 px-6 py-3 font-semibold"
             >
               Contact Us
             </Link>
@@ -231,16 +263,17 @@ export default async function HomePage({
 
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-8">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 md:grid-cols-4">
           <div>
-            <h3 className="text-xl font-bold mb-3">Cada Hogar Cuba</h3>
+            <h3 className="mb-3 text-xl font-bold">Cada Hogar Cuba</h3>
             <p className="text-gray-600">
-              Serving homes, strengthening faith, and building community with purpose.
+              Serving homes, strengthening faith, and building community with
+              purpose.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3">About</h4>
+            <h4 className="mb-3 font-semibold">About</h4>
             <div className="flex flex-col gap-2 text-gray-600">
               <Link href={`/${locale}/about`}>About</Link>
               <Link href={`/${locale}/mission`}>Mission</Link>
@@ -248,7 +281,7 @@ export default async function HomePage({
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3">Resources</h4>
+            <h4 className="mb-3 font-semibold">Resources</h4>
             <div className="flex flex-col gap-2 text-gray-600">
               <Link href={`/${locale}/resources`}>Resources</Link>
               <Link href={`/${locale}/get-involved`}>Get Involved</Link>
@@ -256,7 +289,7 @@ export default async function HomePage({
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3">Connect</h4>
+            <h4 className="mb-3 font-semibold">Connect</h4>
             <div className="flex flex-col gap-2 text-gray-600">
               <Link href={`/${locale}/contact`}>Contact</Link>
               <Link href={`/${locale}/give`}>Give</Link>
