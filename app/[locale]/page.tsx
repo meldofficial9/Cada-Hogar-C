@@ -14,7 +14,7 @@ export default async function HomePage({
     <main className="min-h-screen bg-white text-gray-900">
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
           <Link href={`/${locale}`} className="flex items-center gap-3">
             <div className="rounded-2xl bg-white p-2">
               <Image
