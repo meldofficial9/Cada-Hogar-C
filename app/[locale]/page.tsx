@@ -20,8 +20,8 @@ export default async function HomePage({
               <Image
                 src="/logos/everyhome.png"
                 alt="Every Home logo"
-                width={320}
-                height={120}
+                width={360}
+                height={160}
                 className="h-24 w-auto object-contain"
                 priority
               />
@@ -31,8 +31,8 @@ export default async function HomePage({
               <Image
                 src="/logos/lahoradelaluz.png"
                 alt="La Hora de la Luz logo"
-                width={320}
-                height={120}
+                width={360}
+                height={160}
                 className="h-24 w-auto object-contain"
                 priority
               />
