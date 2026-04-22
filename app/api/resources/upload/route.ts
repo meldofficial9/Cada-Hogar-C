@@ -1,21 +1,24 @@
 import {NextResponse} from 'next/server';
 import {supabaseAdmin} from '@/lib/supabaseAdmin';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     if (!supabaseAdmin) {
       return NextResponse.json(
-        {error: 'Supabase admin client is not configured.'},
+        {error: 'Supabase admin client is not configured correctly.'},
         {status: 500}
       );
     }
 
     const formData = await req.formData();
 
-    const password = formData.get('password')?.toString() || '';
-    const title = formData.get('title')?.toString().trim() || '';
-    const description = formData.get('description')?.toString().trim() || '';
-    const locale = formData.get('locale')?.toString() || 'en';
+    const password = String(formData.get('password') || '');
+    const title = String(formData.get('title') || '').trim();
+    const description = String(formData.get('description') || '').trim();
+    const locale = String(formData.get('locale') || 'en');
     const file = formData.get('file') as File | null;
 
     if (password !== process.env.ADMIN_UPLOAD_PASSWORD) {
@@ -90,6 +93,7 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error('Upload route error:', error);
+
     return NextResponse.json(
       {error: 'Unexpected server error during upload.'},
       {status: 500}
