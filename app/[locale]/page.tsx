@@ -29,7 +29,7 @@ export default async function HomePage({
 
             <div className="rounded-2xl bg-white p-2">
               <Image
-                src="/logos/lahoradelaluz.jpg"
+                src="/logos/lahoradelaluz.png"
                 alt="La Hora de la Luz logo"
                 width={135}
                 height={58}
