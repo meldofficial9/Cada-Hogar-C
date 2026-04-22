@@ -17,10 +17,10 @@ export default async function ResourcesPage({
 }) {
   setRequestLocale(locale);
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   const {data, error} = await supabase
     .from('resources')
@@ -33,8 +33,8 @@ export default async function ResourcesPage({
   return (
     <main className="min-h-screen bg-white px-6 py-16">
       <div className="mx-auto max-w-6xl">
-        <h1 className="text-4xl font-bold mb-4">Resources</h1>
-        <p className="text-lg text-gray-600 mb-10">
+        <h1 className="mb-4 text-4xl font-bold">Resources</h1>
+        <p className="mb-10 text-lg text-gray-600">
           Free downloadable materials for the community.
         </p>
 
