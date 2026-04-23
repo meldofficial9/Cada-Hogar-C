@@ -2,32 +2,31 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {setRequestLocale} from 'next-intl/server';
 
-const events = [
-  {
-    date: 'May 12, 2026',
-    title: 'Prayer Gathering for Cuba',
-    time: '7:00 PM',
-    location: 'Online / Zoom'
-  },
-  {
-    date: 'May 20, 2026',
-    title: 'GoCuba Vision Night',
-    time: '6:30 PM',
-    location: 'Miami, Florida'
-  },
-  {
-    date: 'June 8, 2026',
-    title: 'Community Outreach Training',
-    time: '10:00 AM',
-    location: 'Local Ministry Center'
-  },
-  {
-    date: 'June 22, 2026',
-    title: 'GoCuba Worship & Mission Night',
-    time: '7:30 PM',
-    location: 'Partner Church Event'
-  }
-];
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+const {createClient} = await import('@supabase/supabase-js');
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const {data: eventsData, error: eventsError} = await supabase
+  .from('events')
+  .select('id, title, event_date, event_time, location, description')
+  .eq('audience', 'gocuba')
+  .order('created_at', {ascending: false});
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+const {createClient} = await import('@supabase/supabase-js');
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const {data: eventsData, error: eventsError} = await supabase
+  .from('events')
+  .select('id, title, event_date, event_time, location, description')
+  .eq('audience', 'gocuba')
+  .order('created_at', {ascending: false});
+
+const events = eventsData || [];
 
 const territories = [
   {
@@ -170,7 +169,7 @@ export default async function GoCubaPage({
 
               <div className="flex min-h-[420px] items-center justify-center rounded-2xl bg-gray-100">
                 <Image
-                  src="/images/cuba-map.png"
+                  src="/images/cubamapa.png"
                   alt="Map of Cuba"
                   width={900}
                   height={700}
