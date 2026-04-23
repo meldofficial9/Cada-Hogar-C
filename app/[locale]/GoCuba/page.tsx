@@ -1,32 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import {createClient} from '@supabase/supabase-js';
 import {setRequestLocale} from 'next-intl/server';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-const {createClient} = await import('@supabase/supabase-js');
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-const {data: eventsData, error: eventsError} = await supabase
-  .from('events')
-  .select('id, title, event_date, event_time, location, description')
-  .eq('audience', 'gocuba')
-  .order('created_at', {ascending: false});
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-const {createClient} = await import('@supabase/supabase-js');
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-const {data: eventsData, error: eventsError} = await supabase
-  .from('events')
-  .select('id, title, event_date, event_time, location, description')
-  .eq('audience', 'gocuba')
-  .order('created_at', {ascending: false});
-
-const events = eventsData || [];
+type EventItem = {
+  id: string;
+  title: string;
+  event_date: string;
+  event_time: string | null;
+  location: string | null;
+  description: string | null;
+};
 
 const territories = [
   {
@@ -62,6 +46,19 @@ export default async function GoCubaPage({
 }) {
   setRequestLocale(locale);
 
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const {data: eventsData, error: eventsError} = await supabase
+    .from('events')
+    .select('id, title, event_date, event_time, location, description')
+    .eq('audience', 'gocuba')
+    .order('event_date', {ascending: true});
+
+  const events = (eventsData || []) as EventItem[];
+
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* Top bar */}
@@ -71,7 +68,10 @@ export default async function GoCubaPage({
             ← Back to La Hora de la Luz
           </Link>
 
-          <Link href={`/${locale}/give`} className="rounded-full bg-black px-5 py-2 text-sm font-semibold text-white">
+          <Link
+            href={`/${locale}/give`}
+            className="rounded-full bg-black px-5 py-2 text-sm font-semibold text-white"
+          >
             Support GoCuba
           </Link>
         </div>
@@ -213,42 +213,54 @@ export default async function GoCubaPage({
             </p>
           </div>
 
+          {eventsError && (
+            <div className="mb-6 rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700">
+              Could not load events right now.
+            </div>
+          )}
+
           <div className="grid gap-6">
-            {events.length === 0 ? (
-  <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-8 text-gray-600">
-    No events available yet.
-  </div>
-) : (
-  events.map((event) => (
-      ))
-)}
-              <div
-                key={`${event.date}-${event.title}`}
-                className="grid gap-6 rounded-3xl border border-gray-200 bg-gray-50 p-6 shadow-sm md:grid-cols-[180px_1fr_220px]"
-              >
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-500">
-                    Date
-                  </p>
-                  <p className="mt-2 text-xl font-bold">{event.date}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold">{event.title}</h3>
-                  <p className="mt-2 text-gray-600">
-                    Join us as we gather, pray, and continue building momentum for the mission.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-500">
-                    Details
-                  </p>
-                  <p className="mt-2 font-medium text-gray-900">{event.time}</p>
-                  <p className="mt-1 text-gray-600">{event.location}</p>
-                </div>
+            {!eventsError && events.length === 0 ? (
+              <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-8 text-gray-600">
+                No events available yet.
               </div>
-            ))}
+            ) : (
+              events.map((event) => (
+                <div
+                  key={event.id}
+                  className="grid gap-6 rounded-3xl border border-gray-200 bg-gray-50 p-6 shadow-sm md:grid-cols-[180px_1fr_220px]"
+                >
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-500">
+                      Date
+                    </p>
+                    <p className="mt-2 text-xl font-bold">
+                      {event.event_date}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-semibold">{event.title}</h3>
+                    <p className="mt-2 text-gray-600">
+                      {event.description ||
+                        'Join us as we gather, pray, and continue building momentum for the mission.'}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-500">
+                      Details
+                    </p>
+                    <p className="mt-2 font-medium text-gray-900">
+                      {event.event_time || 'Time TBA'}
+                    </p>
+                    <p className="mt-1 text-gray-600">
+                      {event.location || 'Location TBA'}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
