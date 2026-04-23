@@ -43,8 +43,7 @@ export async function POST(req: Request) {
       success: true,
       message: 'Event deleted successfully.'
     });
-  } catch (error) {
-    console.error('Delete event route error:', error);
+  } catch {
     return NextResponse.json(
       {error: 'Unexpected server error.'},
       {status: 500}
