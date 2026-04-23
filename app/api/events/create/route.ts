@@ -56,8 +56,7 @@ export async function POST(req: Request) {
       success: true,
       message: 'Event created successfully.'
     });
-  } catch (error) {
-    console.error('Create event route error:', error);
+  } catch {
     return NextResponse.json(
       {error: 'Unexpected server error.'},
       {status: 500}
