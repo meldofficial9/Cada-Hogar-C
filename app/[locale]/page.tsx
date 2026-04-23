@@ -30,12 +30,13 @@ export default async function HomePage({
 </Link>
 
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-            <Link href={`/${locale}/about`}>About</Link>
-            <Link href={`/${locale}/mission`}>Mission</Link>
-            <Link href={`/${locale}/resources`}>Resources</Link>
-            <Link href={`/${locale}/get-involved`}>Get Involved</Link>
-            <Link href={`/${locale}/contact`}>Contact</Link>
-          </nav>
+  <Link href={`/${locale}/about`}>About</Link>
+  <Link href={`/${locale}/mission`}>Mission</Link>
+  <Link href={`/${locale}/resources`}>Resources</Link>
+  <Link href={`/${locale}/GoCuba`}>GoCuba</Link>
+  <Link href={`/${locale}/get-involved`}>Get Involved</Link>
+  <Link href={`/${locale}/contact`}>Contact</Link>
+</nav>
 
           <div className="flex items-center gap-3">
             <Link
