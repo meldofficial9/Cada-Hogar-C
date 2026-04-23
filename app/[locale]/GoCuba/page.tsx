@@ -214,7 +214,12 @@ export default async function GoCubaPage({
           </div>
 
           <div className="grid gap-6">
-            {events.map((event) => (
+            {events.length === 0 ? (
+  <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-8 text-gray-600">
+    No events available yet.
+  </div>
+) : (
+  events.map((event) => (
               <div
                 key={`${event.date}-${event.title}`}
                 className="grid gap-6 rounded-3xl border border-gray-200 bg-gray-50 p-6 shadow-sm md:grid-cols-[180px_1fr_220px]"
