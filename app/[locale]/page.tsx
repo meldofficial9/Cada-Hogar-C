@@ -16,29 +16,18 @@ export default async function HomePage({
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <Link href={`/${locale}`} className="flex items-center gap-4">
-            <div className="rounded-2xl bg-white p-2">
-              <Image
-                src="/logos/everyhome.png"
-                alt="Every Home logo"
-                width={360}
-                height={160}
-                className="h-24 w-auto object-contain"
-                priority
-              />
-            </div>
-
-            <div className="rounded-2xl bg-white p-3">
-              <Image
-                src="/logos/lahoradelaluz.png"
-                alt="La Hora de la Luz logo"
-                width={360}
-                height={160}
-                className="h-24 w-auto object-contain"
-                priority
-              />
-            </div>
-          </Link>
+          <Link href={`/${locale}`} className="flex items-center">
+  <div className="rounded-2xl bg-white p-3">
+    <Image
+      src="/logos/lahoradelaluz.png"
+      alt="La Hora de la Luz logo"
+      width={360}
+      height={160}
+      className="h-24 w-auto object-contain md:h-28"
+      priority
+    />
+  </div>
+</Link>
 
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
             <Link href={`/${locale}/about`}>About</Link>
