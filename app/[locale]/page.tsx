@@ -366,7 +366,7 @@ export default async function HomePage({
           rel="noreferrer"
           className="font-semibold text-black underline"
         >
-          @cadahogarcuba
+          @lahoradelaluz.cuba
         </a>
       </div>
     </div>
