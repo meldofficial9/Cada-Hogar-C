@@ -13,16 +13,18 @@ export default function AboutPage({
     <main className="min-h-screen bg-[#f6f0df] text-[#1f1f1f]">
       <section className="bg-[#1f1f1f] py-24 text-white">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-10 inline-flex rounded-3xl bg-white p-5">
-            <Image
-              src="/logos/lahoradelaluz.png"
-              alt="La Hora de la Luz logo"
-              width={360}
-              height={160}
-              className="h-24 w-auto object-contain md:h-28"
-              priority
-            />
-          </div>
+          <div className="mb-10 rounded-3xl bg-white p-5 inline-flex">
+  <Link href={`/${locale}`} className="inline-flex">
+    <Image
+      src="/logos/lahoradelaluz.png"
+      alt="La Hora de la Luz logo"
+      width={360}
+      height={160}
+      className="h-24 w-auto object-contain transition hover:scale-105 md:h-28"
+      priority
+    />
+  </Link>
+</div>
 
           <p className="mb-4 text-sm uppercase tracking-[0.25em] text-white/70">
             About the Ministry
