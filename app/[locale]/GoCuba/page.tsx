@@ -3,6 +3,8 @@ import Link from 'next/link';
 import {createClient} from '@supabase/supabase-js';
 import {setRequestLocale} from 'next-intl/server';
 
+export const dynamic = 'force-dynamic';
+
 type EventItem = {
   id: string;
   title: string;
@@ -20,22 +22,34 @@ const territories = [
       'Ongoing ministry presence through outreach, prayer, and discipleship efforts.'
   },
   {
-    name: 'Santiago de Cuba',
+    name: 'Baracoa',
     status: 'Active',
     description:
       'Ministry work focused on strengthening homes, evangelism, and connection with local believers.'
   },
   {
-    name: 'Central Region',
-    status: 'Growing',
+    name: 'Villa Clara',
+    status: 'Active',
     description:
       'Expanding opportunities for gospel engagement, prayer support, and community presence.'
   },
   {
-    name: 'More territories coming soon',
-    status: 'Expansion',
+    name: 'Artemisa',
+    status: 'Active',
     description:
-      'Additional ministry locations will be added as new updates and confirmed territory information become available.'
+      'A territory reached through prayer, local connection, and ministry outreach.'
+  },
+  {
+    name: 'Matanzas',
+    status: 'Active',
+    description:
+      'A territory where the ministry continues building relationships and sharing hope.'
+  },
+  {
+    name: 'Sancti Spiritus',
+    status: 'Active',
+    description:
+      'A territory connected to the vision of reaching homes and communities with the gospel.'
   }
 ];
 
