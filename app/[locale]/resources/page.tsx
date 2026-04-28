@@ -1,4 +1,4 @@
- import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import {createClient} from '@supabase/supabase-js';
 import {setRequestLocale} from 'next-intl/server';
@@ -43,7 +43,6 @@ export default async function ResourcesPage({
         : 'No resources are available in this language yet.',
     download: locale === 'es' ? 'Descargar PDF' : 'Download PDF',
     uploaded: locale === 'es' ? 'Añadido' : 'Uploaded',
-    backHome: locale === 'es' ? 'Volver al inicio' : 'Back Home',
     admin: locale === 'es' ? 'Admin' : 'Admin',
     ctaTitle:
       locale === 'es'
@@ -54,7 +53,34 @@ export default async function ResourcesPage({
         ? 'Puedes descargar, usar y compartir estos materiales para apoyar la misión de llevar luz a más hogares.'
         : 'You can download, use, and share these materials to support the mission of bringing light to more homes.',
     contactUs: locale === 'es' ? 'Contáctanos' : 'Contact Us',
-    getInvolved: locale === 'es' ? 'Involúcrate' : 'Get Involved'
+    getInvolved: locale === 'es' ? 'Involúcrate' : 'Get Involved',
+
+    churchesLabel: locale === 'es' ? 'Para iglesias' : 'For Churches',
+    churchesTitle:
+      locale === 'es'
+        ? '¿Cómo recibir nuestros materiales?'
+        : 'How can your church receive our materials?',
+    churchesText1:
+      locale === 'es'
+        ? 'Si deseas que tu iglesia reciba nuestros materiales de oración, evangelismo y discipulado, habla con tu pastor o líder y anímalo a contactarnos para establecer un convenio con nuestro ministerio.'
+        : 'If you would like your church to receive our prayer, evangelism, and discipleship materials, speak with your pastor or leader and encourage them to contact us to establish an agreement with our ministry.',
+    churchesText2:
+      locale === 'es'
+        ? 'A través de este acuerdo, podremos proveer materiales de forma mensual que fortalecerán el crecimiento espiritual y el alcance evangelístico de la iglesia.'
+        : 'Through this agreement, we can provide monthly materials that strengthen the spiritual growth and evangelistic outreach of the church.',
+    churchesText3:
+      locale === 'es'
+        ? 'Actualmente, ya estamos apoyando a más de 2000 iglesias en toda Cuba.'
+        : 'Currently, we are already supporting more than 2,000 churches across Cuba.',
+    pastorTitle:
+      locale === 'es'
+        ? 'Invita a tu pastor a escribirnos hoy'
+        : 'Invite your pastor to contact us today',
+    pastorText:
+      locale === 'es'
+        ? 'Comienza el proceso para que tu iglesia reciba materiales mensuales de oración, evangelismo y discipulado.'
+        : 'Begin the process so your church can receive monthly prayer, evangelism, and discipleship materials.',
+    contactButton: locale === 'es' ? 'Contactarnos' : 'Contact Us'
   };
 
   const supabase = createClient(
@@ -141,7 +167,9 @@ export default async function ResourcesPage({
 
           {error && (
             <div className="mb-8 rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700">
-              Could not load resources right now.
+              {locale === 'es'
+                ? 'No se pudieron cargar los recursos en este momento.'
+                : 'Could not load resources right now.'}
             </div>
           )}
 
@@ -188,6 +216,49 @@ export default async function ResourcesPage({
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="bg-[#1f1f1f] py-20 text-white">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-10 rounded-3xl bg-white/5 p-8 md:grid-cols-[1fr_0.8fr] md:p-12">
+            <div>
+              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/60">
+                {copy.churchesLabel}
+              </p>
+
+              <h2 className="mb-6 text-3xl font-bold md:text-5xl">
+                {copy.churchesTitle}
+              </h2>
+
+              <div className="space-y-5 text-lg leading-relaxed text-white/80">
+                <p>{copy.churchesText1}</p>
+                <p>{copy.churchesText2}</p>
+                <p className="font-semibold text-white">
+                  {copy.churchesText3}
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl bg-white p-8 text-[#1f1f1f] shadow-sm">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d83a25] text-2xl text-white">
+                📩
+              </div>
+
+              <h3 className="mb-4 text-2xl font-bold">
+                {copy.pastorTitle}
+              </h3>
+
+              <p className="mb-6 text-gray-700">{copy.pastorText}</p>
+
+              <Link
+                href={`/${locale}/contact`}
+                className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
+              >
+                {copy.contactButton}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
