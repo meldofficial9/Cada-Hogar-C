@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import {createClient} from '@supabase/supabase-js';
 import {setRequestLocale} from 'next-intl/server';
 
@@ -22,114 +21,56 @@ export default async function GoCubaPage({
   setRequestLocale(locale);
 
   const copy = {
-    supportGoCuba: locale === 'es' ? 'Apoyar GoCuba' : 'Support GoCuba',
+    donate: locale === 'es' ? 'Donar' : 'Donate',
     heroTitle:
       locale === 'es'
-        ? 'Alcanzando Cuba por medio de oración, presencia y movimiento del evangelio'
-        : 'Reaching Cuba through prayer, presence, and gospel movement',
+        ? 'Movilizando esperanza en Cuba'
+        : 'Mobilizing hope across Cuba',
+
     heroText:
       locale === 'es'
-        ? 'GoCuba existe para movilizar oración, presencia, alcance y conexión con comunidades en Cuba.'
-        : 'GoCuba exists to mobilize prayer, presence, outreach, and connection with communities in Cuba.',
-    getInvolved: locale === 'es' ? 'Involúcrate' : 'Get Involved',
-    supportMission: locale === 'es' ? 'Apoyar GoCuba' : 'Support GoCuba',
+        ? 'GoCuba conecta oración, alcance, liderazgo y comunidades para llevar la luz de Cristo a toda Cuba.'
+        : 'GoCuba connects prayer, outreach, leadership, and communities to bring the light of Christ across Cuba.',
 
-    missionLabel: locale === 'es' ? 'La misión' : 'The Mission',
-    introTitle:
-      locale === 'es'
-        ? 'Una iniciativa independiente enfocada en el alcance en Cuba'
-        : 'An independent initiative focused on outreach across Cuba',
-    introText:
-      locale === 'es'
-        ? 'GoCuba muestra territorios alcanzados, movimiento ministerial y próximas oportunidades para orar, conectarse y participar.'
-        : 'GoCuba highlights reached territories, ministry momentum, and upcoming opportunities to pray, connect, and participate.',
+    explore: locale === 'es' ? 'Explorar' : 'Explore',
+    events: locale === 'es' ? 'Eventos' : 'Events',
 
-    territoriesLabel: locale === 'es' ? 'Territorios' : 'Territories',
-    territoriesTitle:
+    vision: locale === 'es' ? 'Nuestra Visión' : 'Our Vision',
+    visionTitle:
       locale === 'es'
-        ? 'Lugares donde GoCuba ha llegado'
-        : 'Places GoCuba has reached',
-    territoriesText:
-      locale === 'es'
-        ? 'Esta sección muestra territorios donde ha habido presencia, oración y alcance local.'
-        : 'This section highlights territories where there has been presence, prayer, and local outreach.',
-    mapTitle: locale === 'es' ? 'Mapa de Cuba' : 'Map of Cuba',
-    mapText:
-      locale === 'es'
-        ? 'Territorios actuales donde GoCuba está activo o creciendo.'
-        : 'Current territories where GoCuba is active or growing.',
-    active: locale === 'es' ? 'Activo' : 'Active',
+        ? 'Una Cuba alcanzada con esperanza'
+        : 'A Cuba reached with hope',
 
-    havanaText:
+    visionText:
       locale === 'es'
-        ? 'Presencia continua a través de alcance, oración y esfuerzos de discipulado.'
-        : 'Ongoing presence through outreach, prayer, and discipleship efforts.',
-    baracoaText:
-      locale === 'es'
-        ? 'Trabajo enfocado en fortalecer hogares, evangelismo y conexión con creyentes locales.'
-        : 'Work focused on strengthening homes, evangelism, and connection with local believers.',
-    villaClaraText:
-      locale === 'es'
-        ? 'Oportunidades crecientes para el alcance del evangelio, apoyo en oración y presencia comunitaria.'
-        : 'Expanding opportunities for gospel engagement, prayer support, and community presence.',
-    artemisaText:
-      locale === 'es'
-        ? 'Territorio alcanzado por medio de oración, conexión local y alcance.'
-        : 'A territory reached through prayer, local connection, and outreach.',
-    matanzasText:
-      locale === 'es'
-        ? 'Territorio donde GoCuba continúa construyendo relaciones y compartiendo esperanza.'
-        : 'A territory where GoCuba continues building relationships and sharing hope.',
-    sanctiText:
-      locale === 'es'
-        ? 'Territorio conectado con la visión de alcanzar hogares y comunidades con el evangelio.'
-        : 'A territory connected to the vision of reaching homes and communities with the gospel.',
+        ? 'Creemos en una generación transformada por el evangelio, fortalecida por la oración y activada en misión.'
+        : 'We believe in a generation transformed by the gospel, strengthened through prayer, and activated in mission.',
 
-    eventsLabel: locale === 'es' ? 'Calendario de eventos' : 'Events Calendar',
-    eventsTitle:
-      locale === 'es'
-        ? 'Próximos eventos de GoCuba'
-        : 'Upcoming GoCuba events',
-    eventsText:
-      locale === 'es'
-        ? 'Mantente actualizado sobre reuniones, noches de oración, eventos de visión y oportunidades para conectarte.'
-        : 'Stay updated on gatherings, prayer nights, vision events, and opportunities to connect.',
-    couldNotLoad:
-      locale === 'es'
-        ? 'No se pudieron cargar los eventos en este momento.'
-        : 'Could not load events right now.',
+    territories: locale === 'es' ? 'Territorios Activos' : 'Active Territories',
+    upcoming: locale === 'es' ? 'Próximos Eventos' : 'Upcoming Events',
     noEvents:
       locale === 'es'
-        ? 'Todavía no hay eventos disponibles.'
+        ? 'No hay eventos disponibles todavía.'
         : 'No events available yet.',
-    date: locale === 'es' ? 'Fecha' : 'Date',
-    details: locale === 'es' ? 'Detalles' : 'Details',
-    timeTba: locale === 'es' ? 'Hora por confirmar' : 'Time TBA',
-    locationTba: locale === 'es' ? 'Lugar por confirmar' : 'Location TBA',
-    defaultEvent:
-      locale === 'es'
-        ? 'Únete a nosotros mientras nos reunimos, oramos y seguimos avanzando.'
-        : 'Join us as we gather, pray, and continue moving forward.',
 
-    finalLabel: locale === 'es' ? 'Únete a la visión' : 'Join the vision',
     finalTitle:
       locale === 'es'
-        ? 'Sé parte de la visión de GoCuba'
-        : 'Be part of the GoCuba vision',
+        ? 'Sé parte del movimiento'
+        : 'Be part of the movement',
+
     finalText:
       locale === 'es'
-        ? 'Participa por medio de oración, eventos, generosidad y ánimo mientras GoCuba continúa creciendo.'
-        : 'Join through prayer, event participation, generosity, and encouragement as GoCuba continues to grow.',
-    contactUs: locale === 'es' ? 'Contáctanos' : 'Contact Us'
+        ? 'Ora, participa y ayuda a llevar esperanza a más hogares en Cuba.'
+        : 'Pray, participate, and help bring hope to more homes in Cuba.'
   };
 
   const territories = [
-    {name: 'Havana', description: copy.havanaText},
-    {name: 'Baracoa', description: copy.baracoaText},
-    {name: 'Villa Clara', description: copy.villaClaraText},
-    {name: 'Artemisa', description: copy.artemisaText},
-    {name: 'Matanzas', description: copy.matanzasText},
-    {name: 'Sancti Spiritus', description: copy.sanctiText}
+    'Havana',
+    'Baracoa',
+    'Villa Clara',
+    'Artemisa',
+    'Matanzas',
+    'Sancti Spiritus'
   ];
 
   const supabase = createClient(
@@ -137,260 +78,183 @@ export default async function GoCubaPage({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
-  const {data: eventsData, error: eventsError} = await supabase
+  const {data: eventsData} = await supabase
     .from('events')
-    .select('id, title, event_date, event_time, location, description')
+    .select('id,title,event_date,event_time,location,description')
     .eq('audience', 'gocuba')
     .order('event_date', {ascending: true});
 
   const events = (eventsData || []) as EventItem[];
 
   return (
-    <main className="min-h-screen bg-[#f6f0df] text-[#1f1f1f]">
-      <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-[#f6f0df]/95 backdrop-blur">
+    <main className="min-h-screen bg-white text-slate-900">
+
+      {/* HEADER */}
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href={`/${locale}/GoCuba`} className="flex items-center">
-            <Image
-              src="/logos/GOCUBA.png"
-              alt="GoCuba logo"
-              width={160}
-              height={80}
-              className="h-14 w-auto object-contain"
-              priority
-            />
-          </Link>
+          <Image
+            src="/logos/GOCUBA.png"
+            alt="GoCuba"
+            width={160}
+            height={70}
+            className="h-14 w-auto"
+          />
 
           <div className="flex items-center gap-3">
-            <Link
+            <a
               href="/en/GoCuba"
-              className="rounded-full border border-black/20 px-3 py-1 text-sm"
+              className="rounded-full border px-3 py-1 text-sm"
             >
               EN
-            </Link>
-            <Link
+            </a>
+
+            <a
               href="/es/GoCuba"
-              className="rounded-full border border-black/20 px-3 py-1 text-sm"
+              className="rounded-full border px-3 py-1 text-sm"
             >
               ES
-            </Link>
+            </a>
+
             <a
               href="https://www.paypal.com/donate"
               target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-[#1f1f1f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#d83a25]"
+              className="rounded-full bg-[#0A66C2] px-5 py-2 text-sm font-semibold text-white"
             >
-              {copy.supportGoCuba}
+              {copy.donate}
             </a>
           </div>
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-[#1f1f1f] text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518544866330-95a2f008b95b?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center opacity-25" />
-        <div className="absolute inset-0 bg-[#1f1f1f]/70" />
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-[#071B2E] text-white">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518544866330-95a2f008b95b?q=80&w=1600')] bg-cover bg-center opacity-25" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
-          <div className="mb-8 inline-flex rounded-3xl bg-white p-4 shadow-sm">
-            <Image
-              src="/logos/GOCUBA.png"
-              alt="GoCuba logo"
-              width={280}
-              height={130}
-              className="h-20 w-auto object-contain md:h-24"
-              priority
-            />
-          </div>
-
-          <div className="max-w-4xl">
+        <div className="relative mx-auto max-w-7xl px-6 py-28">
+          <div className="max-w-3xl">
             <p className="mb-4 text-sm uppercase tracking-[0.25em] text-white/70">
               GoCuba
             </p>
-            <h1 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">
+
+            <h1 className="mb-6 text-5xl font-bold leading-tight md:text-7xl">
               {copy.heroTitle}
             </h1>
-            <p className="max-w-2xl text-lg text-white/80 md:text-xl">
+
+            <p className="mb-8 text-lg text-white/80 md:text-xl">
               {copy.heroText}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#territories"
+                className="rounded-full bg-white px-6 py-3 font-semibold text-black"
+              >
+                {copy.explore}
+              </a>
+
               <a
                 href="#events"
-                className="rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-[#f4cf38]"
+                className="rounded-full border border-white px-6 py-3 font-semibold"
               >
-                {copy.getInvolved}
-              </a>
-              <a
-                href="https://www.paypal.com/donate"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black"
-              >
-                {copy.supportMission}
+                {copy.events}
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#f6f0df] py-20">
+      {/* VISION */}
+      <section className="py-24">
         <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
-            {copy.missionLabel}
+          <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#0A66C2]">
+            {copy.vision}
           </p>
-          <h2 className="mb-6 text-3xl font-bold md:text-5xl">
-            {copy.introTitle}
+
+          <h2 className="mb-6 text-4xl font-bold md:text-5xl">
+            {copy.visionTitle}
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-700">
-            {copy.introText}
+
+          <p className="mx-auto max-w-3xl text-lg text-slate-600">
+            {copy.visionText}
           </p>
         </div>
       </section>
 
-      <section className="bg-white py-20">
+      {/* TERRITORIES */}
+      <section id="territories" className="bg-slate-50 py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 max-w-3xl">
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
-              {copy.territoriesLabel}
-            </p>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              {copy.territoriesTitle}
-            </h2>
-            <p className="text-lg text-gray-600">{copy.territoriesText}</p>
+          <h2 className="mb-12 text-4xl font-bold">{copy.territories}</h2>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {territories.map((city) => (
+              <div
+                key={city}
+                className="rounded-3xl bg-white p-8 shadow-sm border border-slate-100"
+              >
+                <h3 className="mb-3 text-2xl font-bold">{city}</h3>
+                <p className="text-slate-600">
+                  Prayer, outreach, and ministry momentum continue growing here.
+                </p>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr]">
-            <div className="overflow-hidden rounded-3xl border border-black/10 bg-[#f6f0df] p-6 shadow-sm">
-              <div className="mb-4">
-                <h3 className="text-2xl font-semibold">{copy.mapTitle}</h3>
-                <p className="mt-2 text-gray-700">{copy.mapText}</p>
-              </div>
+      {/* EVENTS */}
+      <section id="events" className="py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="mb-12 text-4xl font-bold">{copy.upcoming}</h2>
 
-              <div className="flex min-h-[420px] items-center justify-center rounded-2xl bg-white">
-                <Image
-                  src="/images/cubamapa.png"
-                  alt="Map of Cuba"
-                  width={900}
-                  height={700}
-                  className="h-auto w-full object-contain"
-                />
-              </div>
+          {events.length === 0 ? (
+            <div className="rounded-3xl bg-slate-100 p-8 text-slate-600">
+              {copy.noEvents}
             </div>
-
+          ) : (
             <div className="grid gap-6">
-              {territories.map((territory, index) => (
+              {events.map((event) => (
                 <div
-                  key={territory.name}
-                  className={`rounded-3xl p-6 shadow-sm ${
-                    index % 3 === 0
-                      ? 'bg-[#f4cf38] text-[#1f1f1f]'
-                      : index % 3 === 1
-                        ? 'bg-[#6d8352] text-white'
-                        : 'bg-[#3f7ea9] text-white'
-                  }`}
+                  key={event.id}
+                  className="rounded-3xl border border-slate-200 p-8 shadow-sm"
                 >
-                  <div className="mb-4 flex items-center justify-between gap-4">
-                    <h3 className="text-2xl font-bold">{territory.name}</h3>
-                    <span className="rounded-full bg-black/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                      {copy.active}
-                    </span>
-                  </div>
-                  <p className={index % 3 === 0 ? 'text-gray-800' : 'text-white/85'}>
-                    {territory.description}
+                  <p className="text-sm uppercase tracking-[0.2em] text-[#0A66C2]">
+                    {event.event_date}
+                  </p>
+
+                  <h3 className="mt-2 text-2xl font-bold">{event.title}</h3>
+
+                  <p className="mt-3 text-slate-600">
+                    {event.description}
+                  </p>
+
+                  <p className="mt-4 text-sm text-slate-500">
+                    {event.event_time} • {event.location}
                   </p>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="events" className="bg-[#f6f0df] py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 max-w-3xl">
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
-              {copy.eventsLabel}
-            </p>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              {copy.eventsTitle}
-            </h2>
-            <p className="text-lg text-gray-700">{copy.eventsText}</p>
-          </div>
-
-          {eventsError && (
-            <div className="mb-6 rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700">
-              {copy.couldNotLoad}
-            </div>
           )}
-
-          <div className="grid gap-6">
-            {!eventsError && events.length === 0 ? (
-              <div className="rounded-3xl border border-dashed border-black/20 bg-white p-8 text-gray-600">
-                {copy.noEvents}
-              </div>
-            ) : (
-              events.map((event) => (
-                <div
-                  key={event.id}
-                  className="grid gap-6 rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg md:grid-cols-[180px_1fr_220px]"
-                >
-                  <div className="rounded-2xl bg-[#1f1f1f] p-5 text-white">
-                    <p className="text-sm font-semibold uppercase tracking-[0.15em] text-white/60">
-                      {copy.date}
-                    </p>
-                    <p className="mt-2 text-xl font-bold">{event.event_date}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-2xl font-bold">{event.title}</h3>
-                    <p className="mt-2 text-gray-600">
-                      {event.description || copy.defaultEvent}
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl bg-[#f6f0df] p-5">
-                    <p className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-500">
-                      {copy.details}
-                    </p>
-                    <p className="mt-2 font-medium text-gray-900">
-                      {event.event_time || copy.timeTba}
-                    </p>
-                    <p className="mt-1 text-gray-600">
-                      {event.location || copy.locationTba}
-                    </p>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
         </div>
       </section>
 
-      <section className="bg-[#1f1f1f] py-20 text-white">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/60">
-            {copy.finalLabel}
-          </p>
-          <h2 className="mb-6 text-3xl font-bold md:text-5xl">
+      {/* CTA */}
+      <section className="bg-[#071B2E] py-24 text-white">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <h2 className="mb-6 text-4xl font-bold md:text-5xl">
             {copy.finalTitle}
           </h2>
-          <p className="mb-8 text-lg text-white/80">{copy.finalText}</p>
 
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="#events"
-              className="rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-[#f4cf38]"
-            >
-              {copy.getInvolved}
-            </a>
-            <a
-              href="https://www.paypal.com/donate"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black"
-            >
-              {copy.supportGoCuba}
-            </a>
-          </div>
+          <p className="mb-8 text-lg text-white/80">
+            {copy.finalText}
+          </p>
+
+          <a
+            href="https://www.paypal.com/donate"
+            target="_blank"
+            className="rounded-full bg-white px-8 py-4 font-semibold text-black"
+          >
+            {copy.donate}
+          </a>
         </div>
       </section>
     </main>
