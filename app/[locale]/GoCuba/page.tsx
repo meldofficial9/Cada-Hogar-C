@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import {createClient} from '@supabase/supabase-js';
 import {setRequestLocale} from 'next-intl/server';
+import GoCubaInteractiveMap from '@/components/GoCubaInteractiveMap';
+import GoCubaTripsGallery from '@/components/GoCubaTripsGallery';
 
 export const dynamic = 'force-dynamic';
 
@@ -181,27 +183,10 @@ export default async function GoCubaPage({
       </section>
 
       {/* TERRITORIES */}
-      <section id="territories" className="bg-slate-50 py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <h2 className="mb-12 text-4xl font-bold">{copy.territories}</h2>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {territories.map((city) => (
-              <div
-                key={city}
-                className="rounded-3xl bg-white p-8 shadow-sm border border-slate-100"
-              >
-                <h3 className="mb-3 text-2xl font-bold">{city}</h3>
-                <p className="text-slate-600">
-                  Prayer, outreach, and ministry momentum continue growing here.
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <GoCubaInteractiveMap />
 
       {/* EVENTS */}
+      <GoCubaTripsGallery />
       <section id="events" className="py-24">
         <div className="mx-auto max-w-7xl px-6">
           <h2 className="mb-12 text-4xl font-bold">{copy.upcoming}</h2>
