@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {createClient} from '@supabase/supabase-js';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import SubscriptionForm from '@/components/SubscriptionForm';
+import HomeHeroCarousel from '@/components/HomeHeroCarousel';
 
 export const dynamic = 'force-dynamic';
 
@@ -204,8 +205,7 @@ export default async function HomePage({
       </header>
 
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524412529635-a258ed66c010?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/50" />
+        <HomeHeroCarousel />
 
         <div className="relative mx-auto max-w-7xl px-6 py-28 text-white md:py-36">
           <div className="max-w-3xl">
