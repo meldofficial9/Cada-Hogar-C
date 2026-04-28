@@ -1,7 +1,10 @@
- import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
+import {createClient} from '@supabase/supabase-js';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import SubscriptionForm from '@/components/SubscriptionForm';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage({
   params: {locale}
@@ -11,32 +14,46 @@ export default async function HomePage({
   setRequestLocale(locale);
   const t = await getTranslations();
 
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const {data: eventsData} = await supabase
+    .from('events')
+    .select('id, title, event_date, event_time, location, description')
+    .eq('audience', 'gocuba')
+    .order('event_date', {ascending: true})
+    .limit(3);
+
+  const events = eventsData || [];
+
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
           <Link href={`/${locale}`} className="flex items-center">
-  <div className="rounded-2xl bg-white p-3">
-    <Image
-      src="/logos/lahoradelaluz.png"
-      alt="La Hora de la Luz logo"
-      width={360}
-      height={160}
-      className="h-24 w-auto object-contain md:h-28"
-      priority
-    />
-  </div>
-</Link>
+            <div className="rounded-2xl bg-white p-3">
+              <Image
+                src="/logos/lahoradelaluz.png"
+                alt="La Hora de la Luz logo"
+                width={360}
+                height={160}
+                className="h-24 w-auto object-contain md:h-28"
+                priority
+              />
+            </div>
+          </Link>
 
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-  <Link href={`/${locale}/about`}>About</Link>
-  <Link href={`/${locale}/mission`}>Mission</Link>
-  <Link href={`/${locale}/resources`}>Resources</Link>
-  <Link href={`/${locale}/GoCuba`}>GoCuba</Link>
-  <Link href={`/${locale}/get-involved`}>Get Involved</Link>
-  <Link href={`/${locale}/contact`}>Contact</Link>
-</nav>
+            <Link href={`/${locale}/about`}>About</Link>
+            <Link href={`/${locale}/mission`}>Mission</Link>
+            <Link href={`/${locale}/resources`}>Resources</Link>
+            <Link href={`/${locale}/GoCuba`}>GoCuba</Link>
+            <Link href={`/${locale}/get-involved`}>Get Involved</Link>
+            <Link href={`/${locale}/contact`}>Contact</Link>
+          </nav>
 
           <div className="flex items-center gap-3">
             <Link
@@ -69,7 +86,7 @@ export default async function HomePage({
         <div className="relative mx-auto max-w-7xl px-6 py-28 text-white md:py-36">
           <div className="max-w-3xl">
             <p className="mb-5 text-sm uppercase tracking-[0.25em] text-white/80">
-              Cada Hogar Cuba
+              La Hora de la Luz
             </p>
             <h1 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">
               {t('hero.headline')}
@@ -95,83 +112,81 @@ export default async function HomePage({
           </div>
         </div>
       </section>
-     {/* Monthly Featured Article */}
-<section className="bg-white py-20">
-  <div className="mx-auto max-w-7xl px-6">
-    <div className="mb-10 max-w-2xl">
-      <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
-        Featured Monthly Article
-      </p>
-      <h2 className="text-3xl font-bold md:text-4xl">
-        Stories, vision, and updates from the mission
-      </h2>
-    </div>
 
-    <div className="grid items-center gap-10 overflow-hidden rounded-3xl bg-gray-50 shadow-sm md:grid-cols-2">
-      <div className="h-80 bg-[url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-
-      <div className="p-8 md:p-10">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
-          April 2026
-        </p>
-
-        <h3 className="mb-4 text-3xl font-bold leading-tight">
-          Prayer that transforms homes
-        </h3>
-
-        <p className="mb-6 text-lg text-gray-600">
-          Discover how consistent prayer, community outreach, and faith-filled action are bringing hope into homes across Cuba.
-        </p>
-
-        <Link
-          href={`/${locale}/about`}
-          className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
-        >
-          Read Article
-        </Link>
-      </div>
-    </div>
-  </div>
-</section>
-
-      {/* Mission cards */}
+      {/* Monthly Featured Article */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
+              Featured Monthly Article
+            </p>
+            <h2 className="text-3xl font-bold md:text-4xl">
+              Stories, vision, and updates from the mission
+            </h2>
+          </div>
+
+          <div className="grid items-center gap-10 overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm md:grid-cols-2">
+            <div className="h-80 bg-[url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
+
+            <div className="p-8 md:p-10">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#d83a25]">
+                April 2026
+              </p>
+
+              <h3 className="mb-4 text-3xl font-bold leading-tight">
+                Prayer that transforms homes
+              </h3>
+
+              <p className="mb-6 text-lg text-gray-700">
+                Discover how consistent prayer, community outreach, and faith-filled action are bringing hope into homes across Cuba.
+              </p>
+
+              <Link
+                href={`/${locale}/about`}
+                className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
+              >
+                Read Article
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission cards */}
+      <section className="bg-[#f6f0df] py-20">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
               Our Focus
             </p>
             <h2 className="mb-4 text-3xl font-bold md:text-4xl">
               How we serve families and communities
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-700">
               We want every home to encounter hope, faith, and practical support
               through Christ-centered outreach.
             </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="rounded-3xl border border-gray-200 p-8 shadow-sm">
-              <h3 className="mb-3 text-xl font-semibold">Faith</h3>
-              <p className="text-gray-600">
-                Sharing the message of Jesus with families, children, and
-                communities.
+            <div className="rounded-3xl bg-[#f4cf38] p-8 shadow-sm">
+              <h3 className="mb-3 text-xl font-bold">Faith</h3>
+              <p className="text-gray-800">
+                Sharing the message of Jesus with families, children, and communities.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-gray-200 p-8 shadow-sm">
-              <h3 className="mb-3 text-xl font-semibold">Support</h3>
-              <p className="text-gray-600">
-                Providing encouragement, resources, and practical care where it
-                is needed most.
+            <div className="rounded-3xl bg-[#6d8352] p-8 text-white shadow-sm">
+              <h3 className="mb-3 text-xl font-bold">Support</h3>
+              <p className="text-white/85">
+                Providing encouragement, resources, and practical care where it is needed most.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-gray-200 p-8 shadow-sm">
-              <h3 className="mb-3 text-xl font-semibold">Community</h3>
-              <p className="text-gray-600">
-                Building lasting relationships that strengthen homes and reflect
-                God’s love.
+            <div className="rounded-3xl bg-[#3f7ea9] p-8 text-white shadow-sm">
+              <h3 className="mb-3 text-xl font-bold">Community</h3>
+              <p className="text-white/85">
+                Building lasting relationships that strengthen homes and reflect God’s love.
               </p>
             </div>
           </div>
@@ -179,49 +194,43 @@ export default async function HomePage({
       </section>
 
       {/* Featured sections */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+            <div className="overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm">
               <div className="h-56 bg-[url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
               <div className="p-7">
-                <h3 className="mb-3 text-2xl font-semibold">Our Mission</h3>
-                <p className="mb-5 text-gray-600">
-                  Learn how Cada Hogar Cuba is bringing hope to families through
-                  faith and action.
+                <h3 className="mb-3 text-2xl font-bold">Our Mission</h3>
+                <p className="mb-5 text-gray-700">
+                  Learn how La Hora de la Luz is bringing hope to families through faith and action.
                 </p>
-                <Link href={`/${locale}/mission`} className="font-semibold">
+                <Link href={`/${locale}/mission`} className="font-semibold underline">
                   Learn More →
                 </Link>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+            <div className="overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm">
               <div className="h-56 bg-[url('https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
               <div className="p-7">
-                <h3 className="mb-3 text-2xl font-semibold">Resources</h3>
-                <p className="mb-5 text-gray-600">
-                  Explore tools, updates, and content that help people connect
-                  and serve.
+                <h3 className="mb-3 text-2xl font-bold">Resources</h3>
+                <p className="mb-5 text-gray-700">
+                  Explore tools, updates, and content that help people connect and serve.
                 </p>
-                <Link href={`/${locale}/resources`} className="font-semibold">
+                <Link href={`/${locale}/resources`} className="font-semibold underline">
                   Explore Resources →
                 </Link>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+            <div className="overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm">
               <div className="h-56 bg-[url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
               <div className="p-7">
-                <h3 className="mb-3 text-2xl font-semibold">Get Involved</h3>
-                <p className="mb-5 text-gray-600">
-                  Join the work through prayer, partnership, giving, and
-                  community support.
+                <h3 className="mb-3 text-2xl font-bold">Get Involved</h3>
+                <p className="mb-5 text-gray-700">
+                  Join the work through prayer, partnership, giving, and community support.
                 </p>
-                <Link
-                  href={`/${locale}/get-involved`}
-                  className="font-semibold"
-                >
+                <Link href={`/${locale}/get-involved`} className="font-semibold underline">
                   Join Us →
                 </Link>
               </div>
@@ -231,7 +240,7 @@ export default async function HomePage({
       </section>
 
       {/* Impact */}
-      <section className="bg-black py-20 text-white">
+      <section className="bg-[#1f1f1f] py-20 text-white">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
             <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/60">
@@ -262,125 +271,169 @@ export default async function HomePage({
           </div>
         </div>
       </section>
-     {/* Subscription */}
-<section className="bg-gray-50 py-20">
-  <div className="mx-auto max-w-4xl px-6">
-    <div className="rounded-3xl bg-black px-8 py-12 text-white shadow-sm md:px-12 md:py-16">
-      <div className="mx-auto max-w-2xl text-center">
-        <p className="mb-3 text-sm uppercase tracking-[0.25em] text-white/70">
-          Stay Connected
-        </p>
-        <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-          Subscribe for updates and encouragement
-        </h2>
-        <p className="mb-8 text-lg text-white/80">
-          Receive ministry updates, prayer needs, new resources, and stories of what God is doing through Cada Hogar Cuba.
-        </p>
 
-        <SubscriptionForm locale={locale} />
-      </div>
-    </div>
-  </div>
-</section>
-     {/* Quick Contact */}
-<section className="bg-white py-20">
-  <div className="mx-auto max-w-7xl px-6">
-    <div className="mb-12 max-w-2xl">
-      <p className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-500">
-        Contact Us
-      </p>
-      <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-        Stay connected with the ministry
-      </h2>
-      <p className="text-lg text-gray-600">
-        Reach out for questions, partnership opportunities, prayer, or ministry updates.
-      </p>
-    </div>
+      {/* Subscription */}
+      <section className="bg-[#f6f0df] py-20">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="rounded-3xl bg-[#1f1f1f] px-8 py-12 text-white shadow-sm md:px-12 md:py-16">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="mb-3 text-sm uppercase tracking-[0.25em] text-white/70">
+                Stay Connected
+              </p>
+              <h2 className="mb-4 text-3xl font-bold md:text-5xl">
+                Subscribe for updates and encouragement
+              </h2>
+              <p className="mb-8 text-lg text-white/80">
+                Receive ministry updates, prayer needs, new resources, and stories of what God is doing through La Hora de la Luz.
+              </p>
 
-    <div className="grid gap-6 md:grid-cols-3">
-      {/* Email */}
-      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
-          ✉️
+              <SubscriptionForm locale={locale} />
+            </div>
+          </div>
         </div>
+      </section>
 
-        <h3 className="mb-3 text-2xl font-semibold">Email</h3>
+      {/* Upcoming Events */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-3xl">
+              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
+                Upcoming Events
+              </p>
+              <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+                Join upcoming GoCuba gatherings
+              </h2>
+              <p className="text-lg text-gray-700">
+                Stay connected with prayer nights, ministry gatherings, and opportunities to participate.
+              </p>
+            </div>
 
-        <p className="mb-4 text-gray-600">
-          Contact us directly for ministry questions and updates.
-        </p>
+            <Link
+              href={`/${locale}/GoCuba`}
+              className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
+            >
+              View All Events
+            </Link>
+          </div>
 
-        <a
-          href="mailto:gocuba@horadelaluz.org"
-          className="font-semibold text-black underline"
-        >
-          gocuba@horadelaluz.org
-        </a>
-      </div>
+          {events.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-black/20 bg-[#f6f0df] p-8 text-gray-600">
+              No upcoming events available yet.
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-3">
+              {events.map((event) => (
+                <div
+                  key={event.id}
+                  className="rounded-3xl bg-[#f6f0df] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <p className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#d83a25]">
+                    {event.event_date}
+                  </p>
 
-      {/* Phone */}
-      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
-          📞
+                  <h3 className="mb-3 text-2xl font-bold">{event.title}</h3>
+
+                  <p className="mb-5 text-gray-700">
+                    {event.description ||
+                      'Join us as we gather, pray, and continue building momentum for the mission.'}
+                  </p>
+
+                  <div className="mb-6 text-sm text-gray-500">
+                    <p>{event.event_time || 'Time TBA'}</p>
+                    <p>{event.location || 'Location TBA'}</p>
+                  </div>
+
+                  <Link href={`/${locale}/GoCuba`} className="font-semibold text-black underline">
+                    Learn More
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+      </section>
 
-        <h3 className="mb-3 text-2xl font-semibold">Phone</h3>
+      {/* Quick Contact */}
+      <section className="bg-[#f6f0df] py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 max-w-2xl">
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
+              Contact Us
+            </p>
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+              Stay connected with the ministry
+            </h2>
+            <p className="text-lg text-gray-700">
+              Reach out for questions, partnership opportunities, prayer, or ministry updates.
+            </p>
+          </div>
 
-        <p className="mb-4 text-gray-600">
-          Call us for direct communication and support.
-        </p>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl bg-white p-8 shadow-sm">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
+                ✉️
+              </div>
+              <h3 className="mb-3 text-2xl font-semibold">Email</h3>
+              <p className="mb-4 text-gray-600">
+                Contact us directly for ministry questions and updates.
+              </p>
+              <a href="mailto:gocuba@horadelaluz.org" className="font-semibold text-black underline">
+                gocuba@horadelaluz.org
+              </a>
+            </div>
 
-        <a
-          href="tel:+5351102875"
-          className="font-semibold text-black underline"
-        >
-          +5351102875
-        </a>
-      </div>
+            <div className="rounded-3xl bg-white p-8 shadow-sm">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
+                📞
+              </div>
+              <h3 className="mb-3 text-2xl font-semibold">Phone</h3>
+              <p className="mb-4 text-gray-600">
+                Call us for direct communication and support.
+              </p>
+              <a href="tel:+5351102875" className="font-semibold text-black underline">
+                +5351102875
+              </a>
+            </div>
 
-      {/* Instagram */}
-      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
-          📷
+            <div className="rounded-3xl bg-white p-8 shadow-sm">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
+                📷
+              </div>
+              <h3 className="mb-3 text-2xl font-semibold">Instagram</h3>
+              <p className="mb-4 text-gray-600">
+                Follow us for stories, updates, prayer, and ministry content.
+              </p>
+              <a
+                href="https://instagram.com/lahoradelaluz.cuba"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-black underline"
+              >
+                @lahoradelaluz.cuba
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <Link
+              href={`/${locale}/contact`}
+              className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
+            >
+              Go to Contact Page
+            </Link>
+          </div>
         </div>
-
-        <h3 className="mb-3 text-2xl font-semibold">Instagram</h3>
-
-        <p className="mb-4 text-gray-600">
-          Follow us for stories, updates, prayer, and ministry content.
-        </p>
-
-        <a
-          href="https://instagram.com/lahoradelaluz.cuba"
-          target="_blank"
-          rel="noreferrer"
-          className="font-semibold text-black underline"
-        >
-          @lahoradelaluz.cuba
-        </a>
-      </div>
-    </div>
-
-    <div className="mt-10">
-      <Link
-        href={`/${locale}/contact`}
-        className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
-      >
-        Go to Contact Page
-      </Link>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* CTA */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-5xl px-6 text-center">
           <h2 className="mb-6 text-3xl font-bold md:text-5xl">
-            Be part of what God is doing through Cada Hogar Cuba
+            Be part of what God is doing through La Hora de la Luz
           </h2>
           <p className="mb-8 text-lg text-gray-600">
-            Partner with us in prayer, generosity, and action to bring hope to
-            more homes.
+            Partner with us in prayer, generosity, and action to bring hope to more homes.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
@@ -400,13 +453,12 @@ export default async function HomePage({
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-gray-50">
+      <footer className="border-t border-gray-200 bg-[#f6f0df]">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 md:grid-cols-4">
           <div>
-            <h3 className="mb-3 text-xl font-bold">Cada Hogar Cuba</h3>
+            <h3 className="mb-3 text-xl font-bold">La Hora de la Luz</h3>
             <p className="text-gray-600">
-              Serving homes, strengthening faith, and building community with
-              purpose.
+              Serving homes, strengthening faith, and building community with purpose.
             </p>
           </div>
 
@@ -431,6 +483,7 @@ export default async function HomePage({
             <div className="flex flex-col gap-2 text-gray-600">
               <Link href={`/${locale}/contact`}>Contact</Link>
               <Link href={`/${locale}/give`}>Give</Link>
+              <Link href={`/${locale}/GoCuba`}>GoCuba</Link>
             </div>
           </div>
         </div>
