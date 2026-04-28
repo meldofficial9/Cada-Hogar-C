@@ -22,7 +22,6 @@ export default async function GoCubaPage({
   setRequestLocale(locale);
 
   const copy = {
-    back: locale === 'es' ? '← Volver a La Hora de la Luz' : '← Back to La Hora de la Luz',
     supportGoCuba: locale === 'es' ? 'Apoyar GoCuba' : 'Support GoCuba',
     heroTitle:
       locale === 'es'
@@ -30,57 +29,57 @@ export default async function GoCubaPage({
         : 'Reaching Cuba through prayer, presence, and gospel movement',
     heroText:
       locale === 'es'
-        ? 'Explora dónde ha llegado el ministerio, mantente actualizado sobre próximos eventos y descubre cómo puedes ser parte de lo que Dios está haciendo por medio de GoCuba.'
-        : 'Explore where the ministry has reached, stay updated on upcoming events, and discover how you can be part of what God is doing through GoCuba.',
+        ? 'GoCuba existe para movilizar oración, presencia, alcance y conexión con comunidades en Cuba.'
+        : 'GoCuba exists to mobilize prayer, presence, outreach, and connection with communities in Cuba.',
     getInvolved: locale === 'es' ? 'Involúcrate' : 'Get Involved',
-    supportMission: locale === 'es' ? 'Apoyar la misión' : 'Support the Mission',
+    supportMission: locale === 'es' ? 'Apoyar GoCuba' : 'Support GoCuba',
 
     missionLabel: locale === 'es' ? 'La misión' : 'The Mission',
     introTitle:
       locale === 'es'
-        ? 'Una página enfocada en el alcance ministerial en Cuba'
-        : 'A focused landing page for outreach across Cuba',
+        ? 'Una iniciativa independiente enfocada en el alcance en Cuba'
+        : 'An independent initiative focused on outreach across Cuba',
     introText:
       locale === 'es'
-        ? 'GoCuba muestra territorios alcanzados, movimiento ministerial y próximas oportunidades para orar, conectarse y participar en la misión.'
-        : 'GoCuba highlights ministry territories, outreach momentum, and upcoming opportunities to pray, connect, and participate in the mission.',
+        ? 'GoCuba muestra territorios alcanzados, movimiento ministerial y próximas oportunidades para orar, conectarse y participar.'
+        : 'GoCuba highlights reached territories, ministry momentum, and upcoming opportunities to pray, connect, and participate.',
 
     territoriesLabel: locale === 'es' ? 'Territorios' : 'Territories',
     territoriesTitle:
       locale === 'es'
-        ? 'Lugares donde hemos llegado en Cuba'
-        : 'Places we have reached in Cuba',
+        ? 'Lugares donde GoCuba ha llegado'
+        : 'Places GoCuba has reached',
     territoriesText:
       locale === 'es'
-        ? 'Esta sección muestra territorios actuales donde ha habido presencia ministerial, oración y alcance local.'
-        : 'This section highlights current territories where ministry presence, prayer, and local outreach have been taking place.',
+        ? 'Esta sección muestra territorios donde ha habido presencia, oración y alcance local.'
+        : 'This section highlights territories where there has been presence, prayer, and local outreach.',
     mapTitle: locale === 'es' ? 'Mapa de Cuba' : 'Map of Cuba',
     mapText:
       locale === 'es'
-        ? 'Territorios actuales donde el ministerio está activo o creciendo.'
-        : 'Current territories where the ministry is active or growing.',
+        ? 'Territorios actuales donde GoCuba está activo o creciendo.'
+        : 'Current territories where GoCuba is active or growing.',
     active: locale === 'es' ? 'Activo' : 'Active',
 
     havanaText:
       locale === 'es'
-        ? 'Presencia ministerial continua a través de alcance, oración y esfuerzos de discipulado.'
-        : 'Ongoing ministry presence through outreach, prayer, and discipleship efforts.',
+        ? 'Presencia continua a través de alcance, oración y esfuerzos de discipulado.'
+        : 'Ongoing presence through outreach, prayer, and discipleship efforts.',
     baracoaText:
       locale === 'es'
-        ? 'Trabajo ministerial enfocado en fortalecer hogares, evangelismo y conexión con creyentes locales.'
-        : 'Ministry work focused on strengthening homes, evangelism, and connection with local believers.',
+        ? 'Trabajo enfocado en fortalecer hogares, evangelismo y conexión con creyentes locales.'
+        : 'Work focused on strengthening homes, evangelism, and connection with local believers.',
     villaClaraText:
       locale === 'es'
         ? 'Oportunidades crecientes para el alcance del evangelio, apoyo en oración y presencia comunitaria.'
         : 'Expanding opportunities for gospel engagement, prayer support, and community presence.',
     artemisaText:
       locale === 'es'
-        ? 'Territorio alcanzado por medio de oración, conexión local y alcance ministerial.'
-        : 'A territory reached through prayer, local connection, and ministry outreach.',
+        ? 'Territorio alcanzado por medio de oración, conexión local y alcance.'
+        : 'A territory reached through prayer, local connection, and outreach.',
     matanzasText:
       locale === 'es'
-        ? 'Territorio donde el ministerio continúa construyendo relaciones y compartiendo esperanza.'
-        : 'A territory where the ministry continues building relationships and sharing hope.',
+        ? 'Territorio donde GoCuba continúa construyendo relaciones y compartiendo esperanza.'
+        : 'A territory where GoCuba continues building relationships and sharing hope.',
     sanctiText:
       locale === 'es'
         ? 'Territorio conectado con la visión de alcanzar hogares y comunidades con el evangelio.'
@@ -109,8 +108,8 @@ export default async function GoCubaPage({
     locationTba: locale === 'es' ? 'Lugar por confirmar' : 'Location TBA',
     defaultEvent:
       locale === 'es'
-        ? 'Únete a nosotros mientras nos reunimos, oramos y seguimos avanzando en la misión.'
-        : 'Join us as we gather, pray, and continue building momentum for the mission.',
+        ? 'Únete a nosotros mientras nos reunimos, oramos y seguimos avanzando.'
+        : 'Join us as we gather, pray, and continue moving forward.',
 
     finalLabel: locale === 'es' ? 'Únete a la visión' : 'Join the vision',
     finalTitle:
@@ -119,8 +118,8 @@ export default async function GoCubaPage({
         : 'Be part of the GoCuba vision',
     finalText:
       locale === 'es'
-        ? 'Participa por medio de oración, eventos, generosidad y ánimo mientras el ministerio continúa creciendo.'
-        : 'Join through prayer, event participation, generosity, and encouragement as the ministry continues to grow.',
+        ? 'Participa por medio de oración, eventos, generosidad y ánimo mientras GoCuba continúa creciendo.'
+        : 'Join through prayer, event participation, generosity, and encouragement as GoCuba continues to grow.',
     contactUs: locale === 'es' ? 'Contáctanos' : 'Contact Us'
   };
 
@@ -150,11 +149,15 @@ export default async function GoCubaPage({
     <main className="min-h-screen bg-[#f6f0df] text-[#1f1f1f]">
       <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-[#f6f0df]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link
-            href={`/${locale}`}
-            className="text-sm font-semibold text-[#1f1f1f] transition hover:text-[#d83a25]"
-          >
-            {copy.back}
+          <Link href={`/${locale}/GoCuba`} className="flex items-center">
+            <Image
+              src="/logos/GOCUBA.png"
+              alt="GoCuba logo"
+              width={160}
+              height={80}
+              className="h-14 w-auto object-contain"
+              priority
+            />
           </Link>
 
           <div className="flex items-center gap-3">
@@ -170,12 +173,14 @@ export default async function GoCubaPage({
             >
               ES
             </Link>
-            <Link
-              href={`/${locale}/give`}
+            <a
+              href="https://www.paypal.com/donate"
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full bg-[#1f1f1f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#d83a25]"
             >
               {copy.supportGoCuba}
-            </Link>
+            </a>
           </div>
         </div>
       </header>
@@ -208,18 +213,20 @@ export default async function GoCubaPage({
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href={`/${locale}/get-involved`}
+              <a
+                href="#events"
                 className="rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-[#f4cf38]"
               >
                 {copy.getInvolved}
-              </Link>
-              <Link
-                href={`/${locale}/give`}
+              </a>
+              <a
+                href="https://www.paypal.com/donate"
+                target="_blank"
+                rel="noreferrer"
                 className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black"
               >
                 {copy.supportMission}
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -297,7 +304,7 @@ export default async function GoCubaPage({
         </div>
       </section>
 
-      <section className="bg-[#f6f0df] py-20">
+      <section id="events" className="bg-[#f6f0df] py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-3xl">
             <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
@@ -369,18 +376,20 @@ export default async function GoCubaPage({
           <p className="mb-8 text-lg text-white/80">{copy.finalText}</p>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href={`/${locale}/get-involved`}
+            <a
+              href="#events"
               className="rounded-full bg-white px-6 py-3 font-semibold text-black transition hover:bg-[#f4cf38]"
             >
               {copy.getInvolved}
-            </Link>
-            <Link
-              href={`/${locale}/contact`}
+            </a>
+            <a
+              href="https://www.paypal.com/donate"
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black"
             >
-              {copy.contactUs}
-            </Link>
+              {copy.supportGoCuba}
+            </a>
           </div>
         </div>
       </section>
