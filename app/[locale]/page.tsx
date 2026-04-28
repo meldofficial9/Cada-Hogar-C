@@ -182,7 +182,6 @@ export default async function HomePage({
             <Link href={`/${locale}/about`}>{copy.about}</Link>
             <Link href={`/${locale}/mission`}>{copy.mission}</Link>
             <Link href={`/${locale}/resources`}>{copy.resources}</Link>
-            <Link href={`/${locale}/GoCuba`}>GoCuba</Link>
             <Link href={`/${locale}/get-involved`}>{copy.getInvolved}</Link>
             <Link href={`/${locale}/contact`}>{copy.contact}</Link>
           </nav>
