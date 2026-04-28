@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {createClient} from '@supabase/supabase-js';
-import {getTranslations, setRequestLocale} from 'next-intl/server';
+import {setRequestLocale} from 'next-intl/server';
 import SubscriptionForm from '@/components/SubscriptionForm';
 import HomeHeroCarousel from '@/components/HomeHeroCarousel';
 
@@ -13,7 +12,6 @@ export default async function HomePage({
   params: {locale: 'en' | 'es'};
 }) {
   setRequestLocale(locale);
-  const t = await getTranslations();
 
   const copy = {
     about: locale === 'es' ? 'Acerca de' : 'About',
@@ -23,143 +21,144 @@ export default async function HomePage({
     contact: locale === 'es' ? 'Contacto' : 'Contact',
     give: locale === 'es' ? 'Donar' : 'Give',
 
+    heroTitle:
+      locale === 'es'
+        ? 'Casa por casa, Cuba para Cristo.'
+        : 'House by house, Cuba for Christ.',
+    heroText:
+      locale === 'es'
+        ? 'Somos un ministerio cristiano en Cuba con más de 30 años sirviendo a la iglesia, equipando creyentes con materiales de oración, evangelismo y discipulado.'
+        : 'We are a Christian ministry in Cuba with more than 30 years of serving the church, equipping believers with prayer, evangelism, and discipleship materials.',
     learnMore: locale === 'es' ? 'Conocer más' : 'Learn More',
     supportMission: locale === 'es' ? 'Apoyar la misión' : 'Support the Mission',
 
-    featuredArticle: locale === 'es' ? 'Artículo destacado mensual' : 'Featured Monthly Article',
-    storiesVision: locale === 'es'
-      ? 'Historias, visión y actualizaciones de la misión'
-      : 'Stories, vision, and updates from the mission',
-    april: locale === 'es' ? 'Abril 2026' : 'April 2026',
-    prayerTitle: locale === 'es'
-      ? 'La oración que transforma hogares'
-      : 'Prayer that transforms homes',
-    prayerText: locale === 'es'
-      ? 'Descubre cómo la oración constante, el alcance comunitario y la fe en acción están trayendo esperanza a los hogares en Cuba.'
-      : 'Discover how consistent prayer, community outreach, and faith-filled action are bringing hope into homes across Cuba.',
-    readArticle: locale === 'es' ? 'Leer artículo' : 'Read Article',
+    featuredArticle:
+      locale === 'es' ? 'Nuestra visión' : 'Our Vision',
+    storiesVision:
+      locale === 'es'
+        ? 'Llevar a Cristo a todos, en toda Cuba y en nuestra generación'
+        : 'To bring Christ to everyone, throughout Cuba, in our generation',
+    prayerTitle:
+      locale === 'es'
+        ? 'Sirviendo a la iglesia cubana'
+        : 'Serving the Cuban church',
+    prayerText:
+      locale === 'es'
+        ? 'Representamos a Every Home for Christ en la nación y existimos para apoyar a la iglesia evangélica cubana con recursos que fortalecen la oración, el evangelismo y el discipulado.'
+        : 'We represent Every Home for Christ in the nation and exist to support the Cuban evangelical church with resources that strengthen prayer, evangelism, and discipleship.',
+    readArticle: locale === 'es' ? 'Leer más' : 'Read More',
 
     ourFocus: locale === 'es' ? 'Nuestro enfoque' : 'Our Focus',
-    serveFamilies: locale === 'es'
-      ? 'Cómo servimos a las familias y comunidades'
-      : 'How we serve families and communities',
-    serveText: locale === 'es'
-      ? 'Queremos que cada hogar encuentre esperanza, fe y apoyo práctico a través de un alcance centrado en Cristo.'
-      : 'We want every home to encounter hope, faith, and practical support through Christ-centered outreach.',
+    serveFamilies:
+      locale === 'es'
+        ? 'Oración, evangelismo y discipulado'
+        : 'Prayer, evangelism, and discipleship',
+    serveText:
+      locale === 'es'
+        ? 'Equipamos a las iglesias con materiales prácticos y reproducibles para cumplir la Gran Comisión en cada lugar.'
+        : 'We equip churches with practical and reproducible materials to fulfill the Great Commission in every place.',
 
-    faith: locale === 'es' ? 'Fe' : 'Faith',
-    faithText: locale === 'es'
-      ? 'Compartiendo el mensaje de Jesús con familias, niños y comunidades.'
-      : 'Sharing the message of Jesus with families, children, and communities.',
-    support: locale === 'es' ? 'Apoyo' : 'Support',
-    supportText: locale === 'es'
-      ? 'Brindando ánimo, recursos y cuidado práctico donde más se necesita.'
-      : 'Providing encouragement, resources, and practical care where it is needed most.',
-    community: locale === 'es' ? 'Comunidad' : 'Community',
-    communityText: locale === 'es'
-      ? 'Construyendo relaciones duraderas que fortalecen hogares y reflejan el amor de Dios.'
-      : 'Building lasting relationships that strengthen homes and reflect God’s love.',
+    prayer: locale === 'es' ? 'Oración' : 'Prayer',
+    prayerFocus:
+      locale === 'es'
+        ? 'Materiales que fortalecen la intercesión y la vida espiritual de la iglesia.'
+        : 'Materials that strengthen intercession and the spiritual life of the church.',
+    evangelism: locale === 'es' ? 'Evangelismo' : 'Evangelism',
+    evangelismText:
+      locale === 'es'
+        ? 'Herramientas para compartir la verdad y el amor de Jesús con claridad.'
+        : 'Tools to share the truth and love of Jesus with clarity.',
+    discipleship: locale === 'es' ? 'Discipulado' : 'Discipleship',
+    discipleshipText:
+      locale === 'es'
+        ? 'Recursos para acompañar el crecimiento espiritual de nuevos creyentes.'
+        : 'Resources to support the spiritual growth of new believers.',
 
     ourMission: locale === 'es' ? 'Nuestra misión' : 'Our Mission',
-    missionCardText: locale === 'es'
-      ? 'Conoce cómo La Hora de la Luz trae esperanza a las familias por medio de la fe y la acción.'
-      : 'Learn how La Hora de la Luz is bringing hope to families through faith and action.',
+    missionCardText:
+      locale === 'es'
+        ? 'Servimos a la iglesia evangélica cubana equipando y movilizando creyentes.'
+        : 'We serve the Cuban evangelical church by equipping and mobilizing believers.',
     learnMoreArrow: locale === 'es' ? 'Conocer más →' : 'Learn More →',
 
-    resourcesText: locale === 'es'
-      ? 'Explora herramientas, actualizaciones y contenido que ayudan a las personas a conectarse y servir.'
-      : 'Explore tools, updates, and content that help people connect and serve.',
-    exploreResources: locale === 'es' ? 'Explorar recursos →' : 'Explore Resources →',
+    resourcesText:
+      locale === 'es'
+        ? 'Explora materiales de oración, evangelismo y discipulado para iglesias.'
+        : 'Explore prayer, evangelism, and discipleship materials for churches.',
+    exploreResources:
+      locale === 'es' ? 'Explorar recursos →' : 'Explore Resources →',
 
-    getInvolvedText: locale === 'es'
-      ? 'Únete al trabajo por medio de la oración, colaboración, donación y apoyo comunitario.'
-      : 'Join the work through prayer, partnership, giving, and community support.',
+    getInvolvedText:
+      locale === 'es'
+        ? 'Ora, comparte, sirve y ayuda a que más hogares sean alcanzados con el evangelio.'
+        : 'Pray, share, serve, and help more homes be reached with the gospel.',
     joinUs: locale === 'es' ? 'Únete →' : 'Join Us →',
 
     impact: locale === 'es' ? 'Impacto' : 'Impact',
-    impactTitle: locale === 'es'
-      ? 'Construyendo una comunidad con propósito'
-      : 'Building a community with purpose',
-    impactText: locale === 'es'
-      ? 'Cada oración, cada colaboración y cada acto de generosidad ayuda a alcanzar más hogares.'
-      : 'Every prayer, every partnership, and every act of generosity helps reach more homes.',
-    familiesReached: locale === 'es' ? 'Familias alcanzadas' : 'Families reached',
-    communityEfforts: locale === 'es' ? 'Esfuerzos comunitarios' : 'Community efforts',
-    languagesSupported: locale === 'es' ? 'Idiomas disponibles' : 'Languages supported',
+    impactTitle:
+      locale === 'es'
+        ? 'Más de 30 años sirviendo a Cuba'
+        : 'More than 30 years serving Cuba',
+    impactText:
+      locale === 'es'
+        ? 'Dios nos ha permitido apoyar a miles de iglesias en Cuba con materiales que fortalecen la misión.'
+        : 'God has allowed us to support thousands of churches in Cuba with materials that strengthen the mission.',
+    years: locale === 'es' ? 'Años de trayectoria' : 'Years of ministry',
+    churches: locale === 'es' ? 'Iglesias apoyadas' : 'Churches supported',
+    vision: locale === 'es' ? 'Cuba para Cristo' : 'Cuba for Christ',
 
     stayConnected: locale === 'es' ? 'Mantente conectado' : 'Stay Connected',
-    subscribeTitle: locale === 'es'
-      ? 'Suscríbete para recibir actualizaciones y ánimo'
-      : 'Subscribe for updates and encouragement',
-    subscribeText: locale === 'es'
-      ? 'Recibe actualizaciones del ministerio, motivos de oración, nuevos recursos e historias de lo que Dios está haciendo por medio de La Hora de la Luz.'
-      : 'Receive ministry updates, prayer needs, new resources, and stories of what God is doing through La Hora de la Luz.',
-
-    upcomingEvents: locale === 'es' ? 'Próximos eventos' : 'Upcoming Events',
-    joinEvents: locale === 'es'
-      ? 'Únete a las próximas reuniones de GoCuba'
-      : 'Join upcoming GoCuba gatherings',
-    eventsText: locale === 'es'
-      ? 'Mantente conectado con noches de oración, reuniones ministeriales y oportunidades para participar.'
-      : 'Stay connected with prayer nights, ministry gatherings, and opportunities to participate.',
-    viewAllEvents: locale === 'es' ? 'Ver todos los eventos' : 'View All Events',
-    noEvents: locale === 'es'
-      ? 'No hay eventos disponibles todavía.'
-      : 'No upcoming events available yet.',
-    timeTba: locale === 'es' ? 'Hora por confirmar' : 'Time TBA',
-    locationTba: locale === 'es' ? 'Lugar por confirmar' : 'Location TBA',
-    eventDefault: locale === 'es'
-      ? 'Únete a nosotros mientras oramos, nos reunimos y seguimos avanzando en la misión.'
-      : 'Join us as we gather, pray, and continue building momentum for the mission.',
-    learnMoreSimple: locale === 'es' ? 'Ver más' : 'Learn More',
+    subscribeTitle:
+      locale === 'es'
+        ? 'Suscríbete para recibir actualizaciones'
+        : 'Subscribe for updates',
+    subscribeText:
+      locale === 'es'
+        ? 'Recibe noticias del ministerio, motivos de oración, nuevos recursos e historias de lo que Dios está haciendo en Cuba.'
+        : 'Receive ministry news, prayer needs, new resources, and stories of what God is doing in Cuba.',
 
     contactUs: locale === 'es' ? 'Contáctanos' : 'Contact Us',
-    stayConnectedMinistry: locale === 'es'
-      ? 'Mantente conectado con el ministerio'
-      : 'Stay connected with the ministry',
-    contactText: locale === 'es'
-      ? 'Comunícate con nosotros para preguntas, colaboración, oración o actualizaciones del ministerio.'
-      : 'Reach out for questions, partnership opportunities, prayer, or ministry updates.',
+    stayConnectedMinistry:
+      locale === 'es'
+        ? 'Conéctate con el ministerio'
+        : 'Connect with the ministry',
+    contactText:
+      locale === 'es'
+        ? 'Comunícate con nosotros para preguntas, colaboración, oración o información sobre materiales para iglesias.'
+        : 'Reach out for questions, partnership, prayer, or information about church materials.',
     email: locale === 'es' ? 'Correo electrónico' : 'Email',
-    emailText: locale === 'es'
-      ? 'Escríbenos directamente para preguntas y actualizaciones del ministerio.'
-      : 'Contact us directly for ministry questions and updates.',
+    emailText:
+      locale === 'es'
+        ? 'Escríbenos para preguntas y actualizaciones del ministerio.'
+        : 'Contact us for ministry questions and updates.',
     phone: locale === 'es' ? 'Teléfono' : 'Phone',
-    phoneText: locale === 'es'
-      ? 'Llámanos para comunicación directa y apoyo.'
-      : 'Call us for direct communication and support.',
-    instagramText: locale === 'es'
-      ? 'Síguenos para historias, actualizaciones, oración y contenido del ministerio.'
-      : 'Follow us for stories, updates, prayer, and ministry content.',
-    goContact: locale === 'es' ? 'Ir a la página de contacto' : 'Go to Contact Page',
+    phoneText:
+      locale === 'es'
+        ? 'Llámanos para comunicación directa y apoyo.'
+        : 'Call us for direct communication and support.',
+    instagramText:
+      locale === 'es'
+        ? 'Síguenos para historias, actualizaciones, oración y contenido del ministerio.'
+        : 'Follow us for stories, updates, prayer, and ministry content.',
+    goContact:
+      locale === 'es' ? 'Ir a la página de contacto' : 'Go to Contact Page',
 
-    ctaTitle: locale === 'es'
-      ? 'Sé parte de lo que Dios está haciendo por medio de La Hora de la Luz'
-      : 'Be part of what God is doing through La Hora de la Luz',
-    ctaText: locale === 'es'
-      ? 'Colabora con nosotros en oración, generosidad y acción para llevar esperanza a más hogares.'
-      : 'Partner with us in prayer, generosity, and action to bring hope to more homes.',
+    ctaTitle:
+      locale === 'es'
+        ? 'Ayúdanos a servir a la iglesia y alcanzar más hogares.'
+        : 'Help us serve the church and reach more homes.',
+    ctaText:
+      locale === 'es'
+        ? 'Colabora con nosotros en oración, generosidad y acción para llevar a Cristo a todos, en toda Cuba y en nuestra generación.'
+        : 'Partner with us in prayer, generosity, and action to bring Christ to everyone, throughout Cuba, in our generation.',
     giveNow: locale === 'es' ? 'Donar ahora' : 'Give Now',
 
-    footerText: locale === 'es'
-      ? 'Sirviendo hogares, fortaleciendo la fe y construyendo comunidad con propósito.'
-      : 'Serving homes, strengthening faith, and building community with purpose.',
+    footerText:
+      locale === 'es'
+        ? 'Casa por casa, Cuba para Cristo.'
+        : 'House by house, Cuba for Christ.',
     connect: locale === 'es' ? 'Conectar' : 'Connect'
   };
-
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  const {data: eventsData} = await supabase
-    .from('events')
-    .select('id, title, event_date, event_time, location, description')
-    .eq('audience', 'gocuba')
-    .order('event_date', {ascending: true})
-    .limit(3);
-
-  const events = eventsData || [];
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
@@ -207,15 +206,15 @@ export default async function HomePage({
         <HomeHeroCarousel />
 
         <div className="relative mx-auto max-w-7xl px-6 py-28 text-white md:py-36">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <p className="mb-5 text-sm uppercase tracking-[0.25em] text-white/80">
               La Hora de la Luz
             </p>
             <h1 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">
-              {t('hero.headline')}
+              {copy.heroTitle}
             </h1>
-            <p className="mb-8 max-w-2xl text-lg text-white/85 md:text-xl">
-              {t('hero.sub')}
+            <p className="mb-8 max-w-3xl text-lg text-white/85 md:text-xl">
+              {copy.heroText}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -236,20 +235,22 @@ export default async function HomePage({
             <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
               {copy.featuredArticle}
             </p>
-            <h2 className="text-3xl font-bold md:text-4xl">{copy.storiesVision}</h2>
+            <h2 className="text-3xl font-bold md:text-4xl">
+              {copy.storiesVision}
+            </h2>
           </div>
 
           <div className="grid items-center gap-10 overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm md:grid-cols-2">
             <div className="h-80 bg-[url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
 
             <div className="p-8 md:p-10">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#d83a25]">
-                {copy.april}
+              <h3 className="mb-4 text-3xl font-bold leading-tight">
+                {copy.prayerTitle}
+              </h3>
+
+              <p className="mb-6 text-lg text-gray-700">
+                {copy.prayerText}
               </p>
-
-              <h3 className="mb-4 text-3xl font-bold leading-tight">{copy.prayerTitle}</h3>
-
-              <p className="mb-6 text-lg text-gray-700">{copy.prayerText}</p>
 
               <Link href={`/${locale}/about`} className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white">
                 {copy.readArticle}
@@ -265,63 +266,26 @@ export default async function HomePage({
             <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
               {copy.ourFocus}
             </p>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">{copy.serveFamilies}</h2>
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+              {copy.serveFamilies}
+            </h2>
             <p className="text-lg text-gray-700">{copy.serveText}</p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
             <div className="rounded-3xl bg-[#f4cf38] p-8 shadow-sm">
-              <h3 className="mb-3 text-xl font-bold">{copy.faith}</h3>
-              <p className="text-gray-800">{copy.faithText}</p>
+              <h3 className="mb-3 text-xl font-bold">{copy.prayer}</h3>
+              <p className="text-gray-800">{copy.prayerFocus}</p>
             </div>
 
             <div className="rounded-3xl bg-[#6d8352] p-8 text-white shadow-sm">
-              <h3 className="mb-3 text-xl font-bold">{copy.support}</h3>
-              <p className="text-white/85">{copy.supportText}</p>
+              <h3 className="mb-3 text-xl font-bold">{copy.evangelism}</h3>
+              <p className="text-white/85">{copy.evangelismText}</p>
             </div>
 
             <div className="rounded-3xl bg-[#3f7ea9] p-8 text-white shadow-sm">
-              <h3 className="mb-3 text-xl font-bold">{copy.community}</h3>
-              <p className="text-white/85">{copy.communityText}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm">
-              <div className="h-56 bg-[url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-              <div className="p-7">
-                <h3 className="mb-3 text-2xl font-bold">{copy.ourMission}</h3>
-                <p className="mb-5 text-gray-700">{copy.missionCardText}</p>
-                <Link href={`/${locale}/mission`} className="font-semibold underline">
-                  {copy.learnMoreArrow}
-                </Link>
-              </div>
-            </div>
-
-            <div className="overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm">
-              <div className="h-56 bg-[url('https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-              <div className="p-7">
-                <h3 className="mb-3 text-2xl font-bold">{copy.resources}</h3>
-                <p className="mb-5 text-gray-700">{copy.resourcesText}</p>
-                <Link href={`/${locale}/resources`} className="font-semibold underline">
-                  {copy.exploreResources}
-                </Link>
-              </div>
-            </div>
-
-            <div className="overflow-hidden rounded-3xl bg-[#f6f0df] shadow-sm">
-              <div className="h-56 bg-[url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-              <div className="p-7">
-                <h3 className="mb-3 text-2xl font-bold">{copy.getInvolved}</h3>
-                <p className="mb-5 text-gray-700">{copy.getInvolvedText}</p>
-                <Link href={`/${locale}/get-involved`} className="font-semibold underline">
-                  {copy.joinUs}
-                </Link>
-              </div>
+              <h3 className="mb-3 text-xl font-bold">{copy.discipleship}</h3>
+              <p className="text-white/85">{copy.discipleshipText}</p>
             </div>
           </div>
         </div>
@@ -330,23 +294,27 @@ export default async function HomePage({
       <section className="bg-[#1f1f1f] py-20 text-white">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 max-w-2xl">
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/60">{copy.impact}</p>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">{copy.impactTitle}</h2>
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/60">
+              {copy.impact}
+            </p>
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+              {copy.impactTitle}
+            </h2>
             <p className="text-lg text-white/75">{copy.impactText}</p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
             <div>
-              <p className="mb-2 text-5xl font-bold">100+</p>
-              <p className="text-white/70">{copy.familiesReached}</p>
+              <p className="mb-2 text-5xl font-bold">30+</p>
+              <p className="text-white/70">{copy.years}</p>
             </div>
             <div>
-              <p className="mb-2 text-5xl font-bold">25+</p>
-              <p className="text-white/70">{copy.communityEfforts}</p>
+              <p className="mb-2 text-5xl font-bold">2000+</p>
+              <p className="text-white/70">{copy.churches}</p>
             </div>
             <div>
-              <p className="mb-2 text-5xl font-bold">2</p>
-              <p className="text-white/70">{copy.languagesSupported}</p>
+              <p className="mb-2 text-5xl font-bold">1</p>
+              <p className="text-white/70">{copy.vision}</p>
             </div>
           </div>
         </div>
@@ -359,56 +327,15 @@ export default async function HomePage({
               <p className="mb-3 text-sm uppercase tracking-[0.25em] text-white/70">
                 {copy.stayConnected}
               </p>
-              <h2 className="mb-4 text-3xl font-bold md:text-5xl">{copy.subscribeTitle}</h2>
-              <p className="mb-8 text-lg text-white/80">{copy.subscribeText}</p>
+              <h2 className="mb-4 text-3xl font-bold md:text-5xl">
+                {copy.subscribeTitle}
+              </h2>
+              <p className="mb-8 text-lg text-white/80">
+                {copy.subscribeText}
+              </p>
               <SubscriptionForm locale={locale} />
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-3xl">
-              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
-                {copy.upcomingEvents}
-              </p>
-              <h2 className="mb-4 text-3xl font-bold md:text-4xl">{copy.joinEvents}</h2>
-              <p className="text-lg text-gray-700">{copy.eventsText}</p>
-            </div>
-
-            <Link href={`/${locale}/GoCuba`} className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white">
-              {copy.viewAllEvents}
-            </Link>
-          </div>
-
-          {events.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-black/20 bg-[#f6f0df] p-8 text-gray-600">
-              {copy.noEvents}
-            </div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-3">
-              {events.map((event) => (
-                <div key={event.id} className="rounded-3xl bg-[#f6f0df] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                  <p className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#d83a25]">
-                    {event.event_date}
-                  </p>
-                  <h3 className="mb-3 text-2xl font-bold">{event.title}</h3>
-                  <p className="mb-5 text-gray-700">
-                    {event.description || copy.eventDefault}
-                  </p>
-                  <div className="mb-6 text-sm text-gray-500">
-                    <p>{event.event_time || copy.timeTba}</p>
-                    <p>{event.location || copy.locationTba}</p>
-                  </div>
-                  <Link href={`/${locale}/GoCuba`} className="font-semibold text-black underline">
-                    {copy.learnMoreSimple}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
@@ -418,15 +345,14 @@ export default async function HomePage({
             <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#d83a25]">
               {copy.contactUs}
             </p>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">{copy.stayConnectedMinistry}</h2>
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+              {copy.stayConnectedMinistry}
+            </h2>
             <p className="text-lg text-gray-700">{copy.contactText}</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
             <div className="rounded-3xl bg-white p-8 shadow-sm">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
-                ✉️
-              </div>
               <h3 className="mb-3 text-2xl font-semibold">{copy.email}</h3>
               <p className="mb-4 text-gray-600">{copy.emailText}</p>
               <a href="mailto:gocuba@horadelaluz.org" className="font-semibold text-black underline">
@@ -435,9 +361,6 @@ export default async function HomePage({
             </div>
 
             <div className="rounded-3xl bg-white p-8 shadow-sm">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
-                📞
-              </div>
               <h3 className="mb-3 text-2xl font-semibold">{copy.phone}</h3>
               <p className="mb-4 text-gray-600">{copy.phoneText}</p>
               <a href="tel:+5351102875" className="font-semibold text-black underline">
@@ -446,9 +369,6 @@ export default async function HomePage({
             </div>
 
             <div className="rounded-3xl bg-white p-8 shadow-sm">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-2xl text-white">
-                📷
-              </div>
               <h3 className="mb-3 text-2xl font-semibold">Instagram</h3>
               <p className="mb-4 text-gray-600">{copy.instagramText}</p>
               <a
@@ -472,7 +392,9 @@ export default async function HomePage({
 
       <section className="bg-white py-20">
         <div className="mx-auto max-w-5xl px-6 text-center">
-          <h2 className="mb-6 text-3xl font-bold md:text-5xl">{copy.ctaTitle}</h2>
+          <h2 className="mb-6 text-3xl font-bold md:text-5xl">
+            {copy.ctaTitle}
+          </h2>
           <p className="mb-8 text-lg text-gray-600">{copy.ctaText}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href={`/${locale}/give`} className="rounded-full bg-black px-6 py-3 font-semibold text-white">
@@ -513,7 +435,6 @@ export default async function HomePage({
             <div className="flex flex-col gap-2 text-gray-600">
               <Link href={`/${locale}/contact`}>{copy.contact}</Link>
               <Link href={`/${locale}/give`}>{copy.give}</Link>
-              <Link href={`/${locale}/GoCuba`}>GoCuba</Link>
             </div>
           </div>
         </div>
