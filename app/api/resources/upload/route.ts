@@ -19,7 +19,9 @@ export async function POST(req: Request) {
     const title = String(formData.get('title') || '').trim();
     const description = String(formData.get('description') || '').trim();
     const locale = String(formData.get('locale') || 'en');
+
     const file = formData.get('file') as File | null;
+    const cover = formData.get('cover') as File | null;
 
     if (password !== process.env.ADMIN_UPLOAD_PASSWORD) {
       return NextResponse.json({error: 'Unauthorized'}, {status: 401});
@@ -38,6 +40,47 @@ export async function POST(req: Request) {
         {error: 'Only PDF files are allowed.'},
         {status: 400}
       );
+    }
+
+    let coverUrl = '';
+    let coverPath = '';
+
+    if (cover && cover.size > 0) {
+      if (!cover.type.startsWith('image/')) {
+        return NextResponse.json(
+          {error: 'Cover must be an image file.'},
+          {status: 400}
+        );
+      }
+
+      const coverBytes = await cover.arrayBuffer();
+      const coverBuffer = Buffer.from(coverBytes);
+
+      const safeCoverName = cover.name
+        .replace(/[^a-zA-Z0-9.\-_]/g, '-')
+        .toLowerCase();
+
+      coverPath = `${locale}/covers/${Date.now()}-${safeCoverName}`;
+
+      const {error: coverUploadError} = await supabaseAdmin.storage
+        .from('resources')
+        .upload(coverPath, coverBuffer, {
+          contentType: cover.type,
+          upsert: false
+        });
+
+      if (coverUploadError) {
+        return NextResponse.json(
+          {error: `Cover upload failed: ${coverUploadError.message}`},
+          {status: 500}
+        );
+      }
+
+      const {data: coverPublicUrlData} = supabaseAdmin.storage
+        .from('resources')
+        .getPublicUrl(coverPath);
+
+      coverUrl = coverPublicUrlData.publicUrl;
     }
 
     const bytes = await file.arrayBuffer();
@@ -76,7 +119,9 @@ export async function POST(req: Request) {
         description,
         locale,
         file_path: filePath,
-        public_url: publicUrl
+        public_url: publicUrl,
+        cover_url: coverUrl || null,
+        cover_path: coverPath || null
       });
 
     if (insertError) {
@@ -89,7 +134,8 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       message: 'PDF uploaded successfully.',
-      publicUrl
+      publicUrl,
+      coverUrl
     });
   } catch (error) {
     console.error('Upload route error:', error);
