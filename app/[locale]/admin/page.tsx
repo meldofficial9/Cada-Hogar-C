@@ -30,6 +30,7 @@ export default function AdminPage() {
   const [locale, setLocale] = useState('en');
   const [password, setPassword] = useState('');
   const [file, setFile] = useState<File | null>(null);
+  const [cover, setCover] = useState<File | null>(null);
 
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -120,6 +121,9 @@ export default function AdminPage() {
     formData.append('locale', locale);
     formData.append('password', password);
     formData.append('file', file);
+    if (cover) {
+  formData.append('cover', cover);
+}
 
     try {
       const res = await fetch('/api/resources/upload', {
