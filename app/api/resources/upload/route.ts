@@ -41,6 +41,12 @@ export async function POST(req: Request) {
         {status: 400}
       );
     }
+    if (!cover || cover.size === 0) {
+  return NextResponse.json(
+    {error: 'Cover image was not received by the server.'},
+    {status: 400}
+  );
+}
 
     let coverUrl = '';
     let coverPath = '';
