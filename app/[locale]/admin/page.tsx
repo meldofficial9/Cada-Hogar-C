@@ -138,6 +138,7 @@ export default function AdminPage() {
       } else {
         setMessage('PDF uploaded successfully.');
         setTitle('');
+        setCover(null);
         setDescription('');
         setFile(null);
         await loadResources();
@@ -356,6 +357,20 @@ export default function AdminPage() {
                     required
                   />
                 </div>
+                <div>
+  <label className="mb-2 block font-medium">Cover Image</label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => setCover(e.target.files?.[0] || null)}
+    className="block w-full rounded-2xl border border-gray-300 px-4 py-3"
+  />
+
+  <p className="mt-2 text-sm text-gray-500">
+    Optional image for the resource card.
+  </p>
+</div>
 
                 <div>
                   <label className="mb-2 block font-medium">Admin Password</label>
