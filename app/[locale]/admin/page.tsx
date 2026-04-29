@@ -10,6 +10,8 @@ type ResourceItem = {
   public_url: string;
   locale: string;
   file_path: string;
+  cover_url: string | null;
+  cover_path: string | null;
   created_at: string;
 };
 
