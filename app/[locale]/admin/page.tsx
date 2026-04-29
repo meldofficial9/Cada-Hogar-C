@@ -64,7 +64,7 @@ export default function AdminPage() {
 
       const {data, error} = await supabase
         .from('resources')
-        .select('id, title, description, public_url, locale, file_path, created_at')
+        .select('id, title, description, public_url, locale, file_path, cover_url, cover_path, created_at')
         .order('created_at', {ascending: false});
 
       if (error) {
@@ -513,6 +513,13 @@ export default function AdminPage() {
                     >
                       <div className="mb-3 flex items-start justify-between gap-4">
                         <div>
+                          {item.cover_url && (
+  <img
+    src={item.cover_url}
+    alt={item.title}
+    className="mb-4 h-32 w-full rounded-2xl object-cover"
+  />
+)}
                           <h3 className="text-lg font-semibold">{item.title}</h3>
                           <p className="mt-1 text-sm text-gray-500">
                             {item.locale.toUpperCase()} •{' '}
