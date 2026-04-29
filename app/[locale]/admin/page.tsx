@@ -20,6 +20,7 @@ type EventItem = {
   event_time: string | null;
   location: string | null;
   description: string | null;
+  audience: string;
   created_at: string;
 };
 
@@ -42,6 +43,7 @@ export default function AdminPage() {
   const [eventTime, setEventTime] = useState('');
   const [eventLocation, setEventLocation] = useState('');
   const [eventDescription, setEventDescription] = useState('');
+  const [eventAudience, setEventAudience] = useState('lahora');
 
   const [events, setEvents] = useState<EventItem[]>([]);
   const [eventsLoading, setEventsLoading] = useState(true);
@@ -83,8 +85,7 @@ export default function AdminPage() {
 
       const {data, error} = await supabase
         .from('events')
-        .select('id, title, event_date, event_time, location, description, created_at')
-        .eq('audience', 'gocuba')
+        .select('id, title, event_date, event_time, location, description, audience, created_at')
         .order('created_at', {ascending: false});
 
       if (error) {
@@ -201,7 +202,7 @@ export default function AdminPage() {
           event_time: eventTime,
           location: eventLocation,
           description: eventDescription,
-          audience: 'gocuba'
+          audience: eventAudience
         })
       });
 
@@ -216,6 +217,7 @@ export default function AdminPage() {
         setEventTime('');
         setEventLocation('');
         setEventDescription('');
+        setEventAudience('lahora');
         await loadEvents();
       }
     } catch {
@@ -265,6 +267,12 @@ export default function AdminPage() {
     }
   }
 
+  function getAudienceLabel(audience: string) {
+    if (audience === 'gocuba') return 'GoCuba';
+    if (audience === 'lahora') return 'La Hora de la Luz';
+    return audience || 'Unknown';
+  }
+
   return (
     <main className="min-h-screen bg-white text-gray-900">
       <section className="bg-black text-white">
@@ -273,10 +281,10 @@ export default function AdminPage() {
             Admin Panel
           </p>
           <h1 className="text-4xl font-bold md:text-5xl">
-            Manage resources and GoCuba events
+            Manage resources and events
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-white/80">
-            Upload PDF resources, manage downloadable files, and update the GoCuba events calendar.
+            Upload PDF resources, manage downloadable files, and create events for La Hora de la Luz or GoCuba.
           </p>
         </div>
       </section>
@@ -290,7 +298,6 @@ export default function AdminPage() {
           )}
 
           <div className="grid gap-10 lg:grid-cols-2">
-            {/* Upload Resource */}
             <form
               onSubmit={handleUploadResource}
               className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm"
@@ -370,24 +377,35 @@ export default function AdminPage() {
               </div>
             </form>
 
-            {/* Create Event */}
             <form
               onSubmit={handleCreateEvent}
               className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm"
             >
-              <h2 className="mb-2 text-2xl font-semibold">Create GoCuba Event</h2>
+              <h2 className="mb-2 text-2xl font-semibold">Create Event</h2>
               <p className="mb-8 text-gray-600">
-                Add events that will appear on the GoCuba landing page.
+                Choose whether this event belongs to La Hora de la Luz or GoCuba.
               </p>
 
               <div className="grid gap-6">
+                <div>
+                  <label className="mb-2 block font-medium">Event Audience</label>
+                  <select
+                    className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
+                    value={eventAudience}
+                    onChange={(e) => setEventAudience(e.target.value)}
+                  >
+                    <option value="lahora">La Hora de la Luz</option>
+                    <option value="gocuba">GoCuba</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="mb-2 block font-medium">Event Title</label>
                   <input
                     className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
                     value={eventTitle}
                     onChange={(e) => setEventTitle(e.target.value)}
-                    placeholder="GoCuba Vision Night"
+                    placeholder="Noche de oración / GoCuba Vision Night"
                     required
                   />
                 </div>
@@ -419,7 +437,7 @@ export default function AdminPage() {
                     className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
                     value={eventLocation}
                     onChange={(e) => setEventLocation(e.target.value)}
-                    placeholder="Miami, Florida / Online"
+                    placeholder="Miami, Florida / Online / Cuba"
                   />
                 </div>
 
@@ -448,7 +466,6 @@ export default function AdminPage() {
           </div>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-2">
-            {/* Existing Resources */}
             <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
               <div className="mb-8 flex items-end justify-between">
                 <div>
@@ -514,13 +531,12 @@ export default function AdminPage() {
               )}
             </div>
 
-            {/* Existing Events */}
             <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
               <div className="mb-8 flex items-end justify-between">
                 <div>
-                  <h2 className="text-2xl font-semibold">GoCuba Events</h2>
+                  <h2 className="text-2xl font-semibold">Existing Events</h2>
                   <p className="mt-2 text-gray-600">
-                    Manage the events shown on the GoCuba landing page.
+                    Manage events for both La Hora de la Luz and GoCuba.
                   </p>
                 </div>
                 <p className="text-sm text-gray-500">{events.length} total</p>
@@ -541,11 +557,16 @@ export default function AdminPage() {
                     >
                       <div className="mb-3 flex items-start justify-between gap-4">
                         <div>
+                          <span className="mb-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-700">
+                            {getAudienceLabel(event.audience)}
+                          </span>
+
                           <h3 className="text-lg font-semibold">{event.title}</h3>
                           <p className="mt-1 text-sm text-gray-500">
                             {event.event_date}
                             {event.event_time ? ` • ${event.event_time}` : ''}
                           </p>
+
                           {event.location && (
                             <p className="mt-1 text-sm text-gray-500">
                               {event.location}
