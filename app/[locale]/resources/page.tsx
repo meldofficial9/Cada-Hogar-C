@@ -157,12 +157,6 @@ export default async function ResourcesPage({
               <p className="text-lg text-gray-700">{copy.availableText}</p>
             </div>
 
-            <Link
-              href={`/${locale}/admin`}
-              className="inline-block rounded-full bg-black px-6 py-3 font-semibold text-white"
-            >
-              {copy.admin}
-            </Link>
           </div>
 
           {error && (
